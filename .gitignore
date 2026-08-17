@@ -35,3 +35,6 @@ zsh/fzf-tab/
 # Editor backups and stray temp files
 *.bak/
 *.toml-[0-9]*
+
+# 1Password CLI device state
+op/
