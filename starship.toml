@@ -57,8 +57,9 @@ symbol = "☸ "
 style = "cyan"
 format = '[$symbol$context( \($namespace\))]($style) '
 
-[kubernetes.context_aliases]
-"gke_(?P<project>[\\w-]+)_(?P<zone>[\\w-]+)_(?P<cluster>[\\w-]+)" = "$cluster"
+[[kubernetes.contexts]]
+context_pattern = "gke_(?P<project>[\\w-]+)_(?P<zone>[\\w-]+)_(?P<cluster>[\\w-]+)"
+context_alias = "$cluster"
 
 [nodejs]
 symbol = " "
