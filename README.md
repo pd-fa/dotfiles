@@ -123,6 +123,15 @@ One instruction file, one MCP source of truth, no tokens on disk.
 | `ai/mcp-servers.json` | Canonical MCP server definitions — 1Password `op://` refs, no literal secrets |
 | `ai/sync-mcp.py` | Renders the tool-specific configs from canonical |
 | `ai/claude/settings.json` | Claude Code plugins + permissions |
+| `ai/skills/` | Hand-written Claude skills. Symlink each into `~/.claude/skills/` |
+
+```bash
+mkdir -p ~/.claude/skills
+for s in ~/.config/ai/skills/*/; do ln -sfn "$s" ~/.claude/skills/"$(basename "$s")"; done
+```
+
+Skills provided by plugins live in `~/.agents/skills` and are reproduced by reinstalling
+the plugins — only hand-written ones are tracked here.
 
 ```bash
 python3 ~/.config/ai/sync-mcp.py     # after editing mcp-servers.json
