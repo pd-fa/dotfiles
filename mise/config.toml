@@ -1,5 +1,8 @@
 [tools]
 node = "22"
+python = "3.13"
+go = "1.24"
+rust = "stable"
 
 [settings]
 # Trust project-level .mise.toml only after explicit `mise trust`

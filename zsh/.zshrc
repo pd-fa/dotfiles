@@ -34,7 +34,6 @@ path+=(
   $HOME/.cargo/bin
   $HOME/.bun/bin
   $HOME/Library/pnpm
-  /usr/local/go/bin
   $HOME/go/bin
   $HOME/vault/scripts
 )

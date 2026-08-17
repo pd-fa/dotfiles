@@ -103,8 +103,13 @@ gcloud container clusters get-credentials the-fa-sandbox-helix-obs-infra-cluster
 
 ## Conventions
 
-- **Runtimes** via `mise`, not nvm/asdf. Global defaults in `mise/config.toml`, per-project
-  via `.mise.toml`.
+- **Runtimes** via `mise`, not nvm/asdf/rustup or a manual Go install. `mise/config.toml`
+  declares node, python, go and rust; `mise install` provisions all four. Per-project
+  overrides via `.mise.toml`.
+- **`~/go/bin` is not reproducible.** Tools installed with `go install` (dlv, gotestsum,
+  cobra-cli, golines…) need reinstalling on a new machine. The ones nvim needs — gopls,
+  golangci-lint, gofumpt, goimports — are handled by `:Mason`, so only standalone CLI use
+  is affected.
 - **Per-project env** via `direnv`.
 - **Secrets never land in this repo.** `betterleaks` runs as a global pre-commit hook.
   Bypass with `--no-verify` only for confirmed false positives.
