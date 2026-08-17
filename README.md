@@ -69,7 +69,9 @@ Then:
 
 - `mise install` — picks up node 22 from `mise/config.toml`
 - `nvim` — LazyVim installs plugins, then `:Mason` for LSPs (slowest step, start it early)
-- `atuin login` — restores shell history
+- **atuin history** — not synced to a server. Either `atuin register` + `atuin sync` before
+  migrating, or copy `~/.local/share/atuin/history.db` across by hand. Without one of those,
+  shell history does not survive a machine move.
 - `bat cache --build` — registers the Tokyo Night theme
 
 `zsh/fzf-tab/` is an upstream clone, gitignored, and bootstrapped by `.zshrc` on first run.
@@ -158,5 +160,11 @@ gets atlassian/github/playwright from its plugin marketplace, so those are Copil
 
 ## Not managed here
 
-`~/.gnupg` (GPG keys, separate from the 1Password SSH key) and `~/.gitconfig` live outside
-this repo. Export GPG keys manually if migrating.
+Not reproducible from this repo — carry these by hand when moving machines:
+
+| Path | Why |
+| --- | --- |
+| `~/.local/share/atuin/history.db` | Shell history (~23MB). Local-only unless atuin sync is set up |
+| `~/.gnupg` | GPG keys, separate from the 1Password SSH key that signs commits |
+
+`~/.gitconfig` is now `git/config` in this repo, read natively by git via XDG.

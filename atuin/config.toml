@@ -1,6 +1,8 @@
 style = "auto"
 inline_height = 0
-enter_accept = true
+# Enter puts the command on the line to review; a second Enter runs it.
+# true would execute the highlighted entry immediately.
+enter_accept = false
 
 # Up-arrow searches this session's history; ctrl-r stays global
 filter_mode_shell_up_key_binding = "session"
