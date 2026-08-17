@@ -38,3 +38,6 @@ zsh/fzf-tab/
 
 # 1Password CLI device state
 op/
+
+# tmux plugins — upstream clones, bootstrapped by tmux.conf
+tmux/plugins/

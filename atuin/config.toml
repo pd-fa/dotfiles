@@ -2,6 +2,9 @@ style = "auto"
 inline_height = 0
 enter_accept = true
 
+# Up-arrow searches this session's history; ctrl-r stays global
+filter_mode_shell_up_key_binding = "session"
+
 
 ## Defaults to "emacs".  This specifies the keymap on the startup of `atuin
 ## search`.  If this is set to "auto", the startup keymap mode in the Atuin

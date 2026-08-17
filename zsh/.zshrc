@@ -157,16 +157,6 @@ gsutil() {
 }
 
 # --------------------------------------------------
-# Tmux Pane Title Auto Update
-# --------------------------------------------------
-function update_tmux_pane_title() {
-  if [[ -n "$TMUX" ]]; then
-    tmux rename-window "${PWD:t}"
-  fi
-}
-precmd_functions+=update_tmux_pane_title
-
-# --------------------------------------------------
 # Atuin
 # --------------------------------------------------
 eval "$(atuin init zsh)"
