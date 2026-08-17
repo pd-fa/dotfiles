@@ -45,6 +45,15 @@ git config --global core.hooksPath "$CONFIG/git/hooks"
 chmod +x "$CONFIG/git/hooks/"* 2>/dev/null || true
 skip "core.hooksPath -> git/hooks (betterleaks pre-commit)"
 
+step "Ensuring rustup is present"
+# mise's rust plugin drives rustup rather than shipping a toolchain, and its
+# install dir is a symlink to ~/.cargo/bin — so rustup must exist first.
+if command -v rustup >/dev/null || [ -x "$HOME/.cargo/bin/rustup" ]; then
+	skip "rustup already installed"
+else
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
+fi
+
 step "Installing language runtimes (mise)"
 mise install
 
