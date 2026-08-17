@@ -77,6 +77,7 @@ cask "1password-cli"
 cask "claude-code"
 # Brings the power of Copilot coding agent directly to your terminal
 cask "copilot-cli"
+cask "font-zed-mono-nerd-font"
 go "golang.org/x/tools/cmd/callgraph"
 go "github.com/spf13/cobra-cli"
 go "github.com/go-delve/delve/cmd/dlv"
