@@ -69,9 +69,14 @@ Then:
 
 - `mise install` — picks up node 22 from `mise/config.toml`
 - `nvim` — LazyVim installs plugins, then `:Mason` for LSPs (slowest step, start it early)
-- **atuin history** — not synced to a server. Either `atuin register` + `atuin sync` before
-  migrating, or copy `~/.local/share/atuin/history.db` across by hand. Without one of those,
-  shell history does not survive a machine move.
+- **atuin history** — not synced to a server. Restore from the 1Password document:
+
+  ```bash
+  op document get "atuin history backup 2026-08-17" --vault Work --output /tmp/atuin.tar.gz
+  mkdir -p ~/.local/share && tar xzf /tmp/atuin.tar.gz -C ~/.local/share && rm /tmp/atuin.tar.gz
+  ```
+
+  Restore **before** first launching atuin, so it doesn't create an empty db first.
 - `bat cache --build` — registers the Tokyo Night theme
 
 `zsh/fzf-tab/` is an upstream clone, gitignored, and bootstrapped by `.zshrc` on first run.
@@ -164,7 +169,7 @@ Not reproducible from this repo — carry these by hand when moving machines:
 
 | Path | Why |
 | --- | --- |
-| `~/.local/share/atuin/history.db` | Shell history (~23MB). Local-only unless atuin sync is set up |
+| `~/.local/share/atuin/` | Shell history + encryption key. Stored as a 1Password document (Work vault) |
 | `~/.gnupg` | GPG keys, separate from the 1Password SSH key that signs commits |
 
 `~/.gitconfig` is now `git/config` in this repo, read natively by git via XDG.
