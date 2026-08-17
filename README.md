@@ -31,14 +31,20 @@ git clone git@github.com:pd-fa/dotfiles.git ~/.config
 > `Permission denied (publickey)` and commits fail to sign. Do **not** copy
 > `~/.ssh/id_ed25519` from the old machine — the key lives in 1Password.
 
-### Phase 2 — Tooling
+### Phase 2 — Run the bootstrap
 
 ```bash
-brew bundle --file=~/.config/Brewfile
+~/.config/bootstrap.sh
 ```
 
-Installs everything CLI-side: neovim, ghostty, mise, starship, direnv, bat, btop, yazi,
-k9s, act, atuin, eza, fd, fzf, zoxide, lazygit, tmux, gh, 1password-cli, betterleaks.
+Idempotent, so re-run it any time. It installs the Brewfile (CLI tools, casks and the
+**Nerd Font** — without which every glyph renders as tofu), links shell and agent config
+into `$HOME`, wires the git hooks, installs runtimes via mise, builds the bat theme cache,
+renders the MCP configs, and restores atuin history from 1Password if it isn't already
+there.
+
+Phase 1 is deliberately not scripted — MDM, the 1Password GUI and Xcode CLT are all
+interactive.
 
 Apps not in the Brewfile:
 
@@ -51,35 +57,19 @@ podman machine init && podman machine start
 
 Teams, Defender, FortiClient and LucidLink arrive via Jamf — don't brew them.
 
-### Phase 3 — Shell
+### Phase 3 — First launches
 
 ```bash
-ln -sf ~/.config/zsh/.zshrc    ~/.zshrc
-ln -sf ~/.config/zsh/.zprofile ~/.zprofile
-ln -sf ~/.config/zsh/.zshenv   ~/.zshenv
-ln -sf ~/.config/ai/AGENTS.md  ~/AGENTS.md
-ln -sf ~/.config/ai/AGENTS.md  ~/CLAUDE.md
-ln -sf ~/.config/ai/AGENTS.md  ~/GEMINI.md
-ln -sf ~/.config/ai/claude/settings.json ~/.claude/settings.json
-git config --global core.hooksPath ~/.config/git/hooks
 exec zsh -l
 ```
 
-Then:
-
-- `mise install` — picks up node 22 from `mise/config.toml`
 - `nvim` — LazyVim installs plugins, then `:Mason` for LSPs (slowest step, start it early)
-- **atuin history** — not synced to a server. Restore from the 1Password document:
+- `tmux` — tpm self-bootstraps and installs plugins on first run
+- `zsh/fzf-tab/` is an upstream clone, gitignored, cloned by `.zshrc` on first run
 
-  ```bash
-  op document get "atuin history backup 2026-08-17" --vault Work --output /tmp/atuin.tar.gz
-  mkdir -p ~/.local/share && tar xzf /tmp/atuin.tar.gz -C ~/.local/share && rm /tmp/atuin.tar.gz
-  ```
-
-  Restore **before** first launching atuin, so it doesn't create an empty db first.
-- `bat cache --build` — registers the Tokyo Night theme
-
-`zsh/fzf-tab/` is an upstream clone, gitignored, and bootstrapped by `.zshrc` on first run.
+**Sign into 1Password CLI (`op signin`) before the bootstrap** if you want atuin history
+restored automatically — the script skips that step when `op` isn't authenticated, and
+restoring after atuin has created an empty db is messier.
 
 ### Phase 4 — Cloud access
 
