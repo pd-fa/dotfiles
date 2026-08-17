@@ -1,0 +1,15 @@
+[init]
+	defaultBranch = main
+[user]
+	name = paul dolden
+	email = paul.dolden@thefa.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvtQEA1GF5WjhMldr7klfVwz1+PUqIp8EDfP+Uonpwt
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+[commit]
+	gpgsign = true
+[core]
+	hooksPath = ~/.config/git/hooks
+	excludesfile = ~/.config/git/ignore
