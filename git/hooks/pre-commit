@@ -1,0 +1,11 @@
+#!/bin/sh
+# Block commits containing secrets. Bypass with `git commit --no-verify`.
+
+command -v betterleaks >/dev/null 2>&1 || exit 0
+
+if ! betterleaks git --staged --redact; then
+	echo "" >&2
+	echo "betterleaks: secrets detected in staged changes — commit aborted." >&2
+	echo "Remove the secret, or re-run with --no-verify if it is a false positive." >&2
+	exit 1
+fi

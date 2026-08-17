@@ -1,0 +1,98 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$kubernetes\
+$nodejs$python$golang$rust\
+$cmd_duration\
+$line_break\
+$character"""
+
+add_newline = true
+
+[palettes.tokyonight]
+blue = "#2ac3de"
+cyan = "#27a1b9"
+fg = "#c0caf5"
+green = "#9ece6a"
+orange = "#ff9e64"
+pink = "#ff007c"
+purple = "#bb9af7"
+red = "#f7768e"
+grey = "#545c7e"
+
+palette = "tokyonight"
+
+[directory]
+style = "bold blue"
+truncation_length = 3
+truncate_to_repo = true
+read_only = " "
+
+[git_branch]
+symbol = " "
+style = "purple"
+format = "on [$symbol$branch]($style) "
+
+[git_status]
+style = "orange"
+format = "([$all_status$ahead_behind]($style) )"
+conflicted = "= "
+ahead = "⇡${count} "
+behind = "⇣${count} "
+diverged = "⇕⇡${ahead_count}⇣${behind_count} "
+untracked = "?${count} "
+stashed = " "
+modified = "!${count} "
+staged = "+${count} "
+renamed = "»${count} "
+deleted = "✘${count} "
+
+# Cluster context matters more than gcloud project for day-to-day GKE work
+[kubernetes]
+disabled = false
+symbol = "☸ "
+style = "cyan"
+format = '[$symbol$context( \($namespace\))]($style) '
+
+[kubernetes.context_aliases]
+"gke_(?P<project>[\\w-]+)_(?P<zone>[\\w-]+)_(?P<cluster>[\\w-]+)" = "$cluster"
+
+[nodejs]
+symbol = " "
+style = "green"
+format = "[$symbol($version)]($style) "
+
+[python]
+symbol = " "
+style = "green"
+format = "[$symbol($version)]($style) "
+
+[golang]
+symbol = " "
+style = "cyan"
+format = "[$symbol($version)]($style) "
+
+[rust]
+symbol = " "
+style = "orange"
+format = "[$symbol($version)]($style) "
+
+[cmd_duration]
+min_time = 2000
+style = "grey"
+format = "[took $duration]($style) "
+
+[character]
+success_symbol = "[❯](green)"
+error_symbol = "[❯](red)"
+vicmd_symbol = "[❮](orange)"
+
+# Noise — cluster context already tells you the project
+[gcloud]
+disabled = true
+
+[aws]
+disabled = true

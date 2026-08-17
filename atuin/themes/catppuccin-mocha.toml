@@ -1,0 +1,12 @@
+[theme]
+name = "catppuccin-mocha"
+
+[colors]
+AlertInfo = "#89b4fa"  # Blue
+AlertWarn = "#f38ba8"  # Red
+AlertError = "#eba0ac" # Maroon
+Annotation = "#cdd6f4" # Text
+Base = "#1e1e2e"       # Base
+Guidance = "#fab387"   # Peach
+Important = "#f5c2e7"  # Pink
+Title = "#74c7ec"      # Sapphire

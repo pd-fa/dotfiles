@@ -1,0 +1,28 @@
+keybind = global:cmd+shift+`=toggle_quick_terminal
+
+theme = tokyonight_night
+font-family = "ZedMono Nerd Font Mono"
+
+bold-is-bright = true
+
+# window settings
+adjust-cell-height = 10%
+cursor-invert-fg-bg = true
+
+shell-integration-features = no-cursor,sudo
+confirm-close-surface = false
+
+# Mouse settings
+mouse-hide-while-typing = true
+
+# Font settings
+font-size = 17
+font-feature = +liga
+cursor-style = block
+adjust-underline-position = 4
+
+clipboard-read = allow
+clipboard-write = allow
+clipboard-trim-trailing-spaces = true
+
+macos-option-as-alt = left

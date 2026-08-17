@@ -1,0 +1,37 @@
+# macOS
+.DS_Store
+
+# Credentials — never commit
+gcloud/
+github-copilot/
+1Password/
+.jira
+
+# Machine-local tool state
+configstore/
+containers/
+herdr/
+opencode/
+raycast/
+simple-update-notifier/
+uv/
+wireshark/
+memos.json
+.nvmrc
+
+# Superseded / unused tooling
+fish/
+gatsby/
+grammarly-languageserver/
+gtk-2.0/
+gtk-3.0/
+helix/
+yarn/
+zed/
+
+# Upstream clone — .zshrc bootstraps this on a fresh machine
+zsh/fzf-tab/
+
+# Editor backups and stray temp files
+*.bak/
+*.toml-[0-9]*

@@ -1,0 +1,54 @@
+style = "auto"
+inline_height = 0
+enter_accept = true
+
+
+## Defaults to "emacs".  This specifies the keymap on the startup of `atuin
+## search`.  If this is set to "auto", the startup keymap mode in the Atuin
+## search is automatically selected based on the shell's keymap where the
+## keybinding is defined.  If this is set to "emacs", "vim-insert", or
+## "vim-normal", the startup keymap mode in the Atuin search is forced to be
+## the specified one.
+# keymap_mode = "auto"
+
+## Cursor style in each keymap mode.  If specified, the cursor style is changed
+## in entering the cursor shape.  Available values are "default" and
+## "{blink,steady}-{block,underilne,bar}".
+# keymap_cursor = { emacs = "blink-block", vim_insert = "blink-block", vim_normal = "steady-block" }
+
+# network_connect_timeout = 5
+# network_timeout = 5
+
+## Timeout (in seconds) for acquiring a local database connection (sqlite)
+# local_timeout = 5
+
+## Set this to true and Atuin will minimize motion in the UI - timers will not update live, etc. 
+## Alternatively, set env NO_MOTION=true
+# prefers_reduced_motion = false
+
+#[stats]
+# Set commands where we should consider the subcommand for statistics. Eg, kubectl get vs just kubectl
+#common_subcommands = [
+#  "cargo",
+#  "go",
+#  "git",
+#  "npm",
+#  "yarn",
+#  "pnpm",
+#  "kubectl",
+#]
+#
+# Set commands that should be totally stripped and ignored from stats
+#common_prefix = ["sudo"]
+
+[theme]
+# TokyoNight color scheme
+foreground = "c0caf5"
+background = "1a1b26"
+border = "3b4261"
+selected_background = "283457"
+selected_foreground = "7aa2f7"
+cursor = "7aa2f7"
+search = "7dcfff"
+time = "9ece6a"
+command = "c0caf5"

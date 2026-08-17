@@ -1,0 +1,6 @@
+[tools]
+node = "22"
+
+[settings]
+# Trust project-level .mise.toml only after explicit `mise trust`
+experimental = false

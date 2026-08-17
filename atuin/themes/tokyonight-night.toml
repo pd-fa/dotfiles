@@ -1,0 +1,12 @@
+[theme]
+name = "TokyoNight"
+
+[colors]
+AlertInfo = "#7dcfff"   # Light Blue
+AlertWarn = "#e0af68"   # Orange
+AlertError = "#db4b4b"  # Red
+Annotation = "#c0caf5"  # Light Periwinkle
+Base = "#1a1b26"        # Dark Blue
+Guidance = "#ff9e64"    # Coral
+Important = "#bb9af7"   # Light Purple
+Title = "#7aa2f7"       # Blue
