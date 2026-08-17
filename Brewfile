@@ -13,6 +13,8 @@ brew "bat"
 brew "betterleaks"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
+# Utility for connecting securely to your Cloud SQL instances
+brew "cloud-sql-proxy"
 # Load/unload environment variables based on $PWD
 brew "direnv"
 # Modern, maintained replacement for ls

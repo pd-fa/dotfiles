@@ -28,7 +28,7 @@ function dbp() {
     return 1
     ;;
   esac
-  ~/cloud-sql-proxy the-fa-api-"$1":europe-west2:pps --port "$PORT"
+  cloud-sql-proxy the-fa-api-"$1":europe-west2:pps --port "$PORT"
 }
 
 function corev2() {
@@ -47,7 +47,7 @@ function corev2() {
     return 1
     ;;
   esac
-  ~/cloud-sql-proxy the-fa-"$1":europe-west2:helix --port "$PORT"
+  cloud-sql-proxy the-fa-"$1":europe-west2:helix --port "$PORT"
 }
 
 function twf() {
