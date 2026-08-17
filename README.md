@@ -1,26 +1,92 @@
 # dotfiles
 
 Work machine config. macOS (Apple Silicon), zsh, Ghostty, Neovim.
-
 Everything terminal-facing is themed **Tokyo Night**.
 
-## Bootstrap
+---
+
+## New machine runbook
+
+### Phase 1 — The unlock chain
+
+Order is load-bearing. Each step gates the next: git auth *and* commit signing both route
+through the 1Password SSH agent, so **no clone happens until step 3**.
+
+| # | Step | Unlocks |
+|---|------|---------|
+| 1 | macOS setup, Apple ID, **FileVault on** | — |
+| 2 | MDM / Jamf enrolment — Self Service, Defender, FortiClient VPN, Teams, LucidLink | Company apps + network |
+| 3 | 1Password → **enable SSH agent** (Settings → Developer) + browser extension | SSH + commit signing |
+| 4 | `xcode-select --install` | git, compilers |
+| 5 | Homebrew | everything below |
+| 6 | `git clone git@github.com:pd-fa/dotfiles.git ~/.config` | shell, nvim, ghostty |
 
 ```bash
 xcode-select --install
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
 git clone git@github.com:pd-fa/dotfiles.git ~/.config
-brew bundle --file=~/.config/Brewfile
+```
 
+> **Gotcha:** without the 1Password SSH agent enabled, `git clone` fails with
+> `Permission denied (publickey)` and commits fail to sign. Do **not** copy
+> `~/.ssh/id_ed25519` from the old machine — the key lives in 1Password.
+
+### Phase 2 — Tooling
+
+```bash
+brew bundle --file=~/.config/Brewfile
+```
+
+Installs everything CLI-side: neovim, ghostty, mise, starship, direnv, bat, btop, yazi,
+k9s, act, atuin, eza, fd, fzf, zoxide, lazygit, tmux, gh, 1password-cli, betterleaks.
+
+Apps not in the Brewfile:
+
+```bash
+brew install --cask google-cloud-sdk podman-desktop tableplus dia obsidian raycast
+brew install --cask claude-code copilot-cli
+gcloud components install gke-gcloud-auth-plugin
+podman machine init && podman machine start
+```
+
+Teams, Defender, FortiClient and LucidLink arrive via Jamf — don't brew them.
+
+### Phase 3 — Shell
+
+```bash
 ln -sf ~/.config/zsh/.zshrc    ~/.zshrc
 ln -sf ~/.config/zsh/.zprofile ~/.zprofile
 ln -sf ~/.config/zsh/.zshenv   ~/.zshenv
+git config --global core.hooksPath ~/.config/git/hooks
 exec zsh -l
 ```
 
-1Password must be installed with the **SSH agent enabled** before cloning — git auth and
-commit signing both route through it (`~/.gitconfig` uses `op-ssh-sign`).
+Then:
+
+- `mise install` — picks up node 22 from `mise/config.toml`
+- `nvim` — LazyVim installs plugins, then `:Mason` for LSPs (slowest step, start it early)
+- `atuin login` — restores shell history
+- `bat cache --build` — registers the Tokyo Night theme
+
+`zsh/fzf-tab/` is an upstream clone, gitignored, and bootstrapped by `.zshrc` on first run.
+
+### Phase 4 — Cloud access
+
+```bash
+gh auth login                    # pd-fa account
+gcloud init                      # paul.dolden@thefa.com / the-fa-api-prod
+
+gcloud container clusters get-credentials helix-monitoring \
+  --zone europe-west2-a --project the-fa-helix-infra
+gcloud container clusters get-credentials helix-obs-infra-cluster \
+  --zone europe-west2-a --project the-fa-helix-infra
+gcloud container clusters get-credentials the-fa-sandbox-helix-obs-infra-cluster \
+  --zone europe-west2-a --project the-fa-sandbox
+```
+
+`dbp()` and `corev2()` in `zsh/functions.zsh` need `cloud-sql-proxy` in `~/`.
+
+---
 
 ## Layout
 
@@ -31,20 +97,20 @@ commit signing both route through it (`~/.gitconfig` uses `op-ssh-sign`).
 | `ghostty/`, `tmux/` | Terminal + multiplexer |
 | `starship.toml` | Prompt |
 | `git/hooks/` | Global hooks — enabled via `core.hooksPath` |
-| `mise/` | Runtime versions (node, python, go) |
+| `mise/` | Runtime versions |
 | `bat/`, `btop/`, `yazi/`, `k9s/`, `lazygit/` | Tool configs + themes |
 
 ## Conventions
 
-- **Runtimes** are managed by `mise`, not nvm/asdf. Global defaults in `mise/config.toml`;
-  per-project via `.mise.toml`.
+- **Runtimes** via `mise`, not nvm/asdf. Global defaults in `mise/config.toml`, per-project
+  via `.mise.toml`.
 - **Per-project env** via `direnv`.
-- **Secrets never land in this repo.** `betterleaks` runs as a global pre-commit hook:
-
-  ```bash
-  git config --global core.hooksPath ~/.config/git/hooks
-  ```
-
+- **Secrets never land in this repo.** `betterleaks` runs as a global pre-commit hook.
   Bypass with `--no-verify` only for confirmed false positives.
-- `zsh/fzf-tab/` is an upstream clone, gitignored, and bootstrapped by `.zshrc` on first run.
-- Machine-local state (`gcloud/`, `raycast/`, `github-copilot/`, `1Password/`) is gitignored.
+- **Machine-local state** (`gcloud/`, `raycast/`, `github-copilot/`, `1Password/`) is gitignored.
+- `DOCKER_HOST` derives from `$TMPDIR` — never hardcode the `/var/folders` ID, it differs per machine.
+
+## Not managed here
+
+`~/.gnupg` (GPG keys, separate from the 1Password SSH key) and `~/.gitconfig` live outside
+this repo. Export GPG keys manually if migrating.
