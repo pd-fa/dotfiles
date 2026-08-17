@@ -1,0 +1,54 @@
+{
+  "_comment": [
+    "Canonical MCP server definitions for Claude Code and Copilot CLI.",
+    "No literal secrets: credentials are 1Password op:// references resolved at spawn",
+    "time by `op run`. Safe to commit.",
+    "Run `ai/sync-mcp.py` to render the tool-specific config files.",
+    "`targets` selects which tools receive a server — Claude Code already gets",
+    "atlassian/github/playwright via its plugin marketplace, so they are copilot-only."
+  ],
+  "servers": {
+    "sonarqube": {
+      "targets": ["claude", "copilot"],
+      "type": "stdio",
+      "command": "op",
+      "args": [
+        "run",
+        "--",
+        "podman",
+        "run",
+        "--init",
+        "-i",
+        "--rm",
+        "-e",
+        "SONARQUBE_TOKEN",
+        "-e",
+        "SONARQUBE_ORG",
+        "sonarsource/sonarqube-mcp"
+      ],
+      "env": {
+        "SONARQUBE_TOKEN": "op://Work/SonarCloud MCP/credential",
+        "SONARQUBE_ORG": "thefa-win"
+      }
+    },
+    "playwright": {
+      "targets": ["copilot"],
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"]
+    },
+    "atlassian": {
+      "targets": ["copilot"],
+      "type": "http",
+      "url": "https://mcp.atlassian.com/v1/mcp/authv2"
+    },
+    "github": {
+      "targets": ["copilot"],
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_PERSONAL_ACCESS_TOKEN}"
+      }
+    }
+  }
+}

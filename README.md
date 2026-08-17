@@ -57,6 +57,9 @@ Teams, Defender, FortiClient and LucidLink arrive via Jamf — don't brew them.
 ln -sf ~/.config/zsh/.zshrc    ~/.zshrc
 ln -sf ~/.config/zsh/.zprofile ~/.zprofile
 ln -sf ~/.config/zsh/.zshenv   ~/.zshenv
+ln -sf ~/.config/ai/AGENTS.md  ~/AGENTS.md
+ln -sf ~/.config/ai/AGENTS.md  ~/CLAUDE.md
+ln -sf ~/.config/ai/claude/settings.json ~/.claude/settings.json
 git config --global core.hooksPath ~/.config/git/hooks
 exec zsh -l
 ```
@@ -109,6 +112,39 @@ gcloud container clusters get-credentials the-fa-sandbox-helix-obs-infra-cluster
   Bypass with `--no-verify` only for confirmed false positives.
 - **Machine-local state** (`gcloud/`, `raycast/`, `github-copilot/`, `1Password/`) is gitignored.
 - `DOCKER_HOST` derives from `$TMPDIR` — never hardcode the `/var/folders` ID, it differs per machine.
+
+## AI tooling
+
+One instruction file, one MCP source of truth, no tokens on disk.
+
+| Path | What |
+| --- | --- |
+| `ai/AGENTS.md` | Single instruction file. `~/AGENTS.md` and `~/CLAUDE.md` both symlink to it |
+| `ai/mcp-servers.json` | Canonical MCP server definitions — 1Password `op://` refs, no literal secrets |
+| `ai/sync-mcp.py` | Renders the tool-specific configs from canonical |
+| `ai/claude/settings.json` | Claude Code plugins + permissions |
+
+```bash
+python3 ~/.config/ai/sync-mcp.py     # after editing mcp-servers.json
+```
+
+Writes `~/.claude.json` (merged in place — it is a mutable state file) and
+`~/.copilot/mcp-config.json` (overwritten).
+
+**Secrets.** MCP servers that need a credential are spawned via `op run`, which resolves
+`op://` references at launch. Nothing is stored in the config:
+
+```json
+"command": "op",
+"args": ["run", "--", "podman", "run", ...],
+"env": { "SONARQUBE_TOKEN": "op://Work/SonarCloud MCP/credential" }
+```
+
+**Use `podman`, never `docker`.** `docker` is a shell alias here — MCP servers spawn
+without a shell, so a `docker` command silently fails to start.
+
+`targets` in `mcp-servers.json` selects which tool gets which server. Claude Code already
+gets atlassian/github/playwright from its plugin marketplace, so those are Copilot-only.
 
 ## Not managed here
 

@@ -33,6 +33,8 @@ brew "pkgconf"
 brew "gstreamer"
 # Kubernetes CLI To Manage Your Clusters In Style!
 brew "k9s"
+# Kubernetes command-line interface
+brew "kubernetes-cli"
 # Simple terminal UI for git commands
 brew "lazygit"
 # Postgres C API library
