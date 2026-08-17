@@ -59,6 +59,7 @@ ln -sf ~/.config/zsh/.zprofile ~/.zprofile
 ln -sf ~/.config/zsh/.zshenv   ~/.zshenv
 ln -sf ~/.config/ai/AGENTS.md  ~/AGENTS.md
 ln -sf ~/.config/ai/AGENTS.md  ~/CLAUDE.md
+ln -sf ~/.config/ai/AGENTS.md  ~/GEMINI.md
 ln -sf ~/.config/ai/claude/settings.json ~/.claude/settings.json
 git config --global core.hooksPath ~/.config/git/hooks
 exec zsh -l
