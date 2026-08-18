@@ -90,6 +90,17 @@ else
 	warn "gh/hosts.yml has no valid token — run 'gh auth login' (or 'gh auth logout -u <name>' to drop an account that is not yours)"
 fi
 
+step "Checking ~/Library/LaunchAgents is writable"
+# Some MDM-pushed installers (the Xerox print client, for one) create this
+# directory as root, which makes every `brew services` start fail with an
+# opaque "Permission denied @ rb_sysopen". Catch it here and say what to do.
+if [ -d "$HOME/Library/LaunchAgents" ] && [ ! -w "$HOME/Library/LaunchAgents" ]; then
+	# shellcheck disable=SC2088  # literal ~ is deliberate: this is a message to copy-paste
+	warn "~/Library/LaunchAgents is owned by $(stat -f %Su "$HOME/Library/LaunchAgents") — brew services cannot start; fix with: sudo chown $(id -un) ~/Library/LaunchAgents"
+else
+	skip "writable"
+fi
+
 step "Installing packages (brew bundle)"
 # Non-fatal: one unavailable package must not abandon the rest of the bootstrap.
 # brew bundle is itself idempotent, so re-running picks up whatever was missed.

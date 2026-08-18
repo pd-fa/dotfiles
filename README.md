@@ -31,6 +31,15 @@ git clone git@github.com:pd-fa/dotfiles.git ~/.config
 > `Permission denied (publickey)` and commits fail to sign. Do **not** copy
 > `~/.ssh/id_ed25519` from the old machine — the key lives in 1Password.
 
+> **Gotcha:** MDM-pushed installers (the Xerox print client is one) can create
+> `~/Library/LaunchAgents` owned by **root**. Every `brew services` start then
+> fails with `Permission denied @ rb_sysopen`. The bootstrap checks for this and
+> tells you; the fix is:
+>
+> ```bash
+> sudo chown "$(id -un)" ~/Library/LaunchAgents
+> ```
+
 ### Phase 2 — Run the bootstrap
 
 ```bash
