@@ -92,6 +92,10 @@ cask "font-zed-mono-nerd-font"
 # Google Cloud CLI — gcloud, gsutil, bq. Cask is named gcloud-cli; the old
 # google-cloud-sdk name is an alias. Required by the Phase 4 cloud runbook.
 cask "gcloud-cli"
+# Terminal emulator that uses platform-native UI and GPU acceleration
+cask "ghostty"
+# Native GUI tool for relational databases
+cask "tableplus"
 go "golang.org/x/tools/cmd/callgraph"
 go "github.com/spf13/cobra-cli"
 go "github.com/go-delve/delve/cmd/dlv"

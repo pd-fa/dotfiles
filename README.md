@@ -88,8 +88,7 @@ interactive.
 Apps not in the Brewfile:
 
 ```bash
-brew install --cask google-cloud-sdk podman-desktop tableplus dia obsidian raycast
-brew install --cask claude-code copilot-cli
+brew install --cask podman-desktop dia obsidian raycast
 gcloud components install gke-gcloud-auth-plugin
 podman machine init && podman machine start
 ```
