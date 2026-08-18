@@ -94,17 +94,6 @@ zstyle ':fzf-tab:complete:nvim:*' fzf-preview \
 # fzf-tab: switch between completion groups with < and >
 zstyle ':fzf-tab:*' switch-group '<' '>'
 
-# kubectl completions (cached — regenerate by deleting ~/.kubectl_zsh_completion)
-if (( $+commands[kubectl] )); then
-  local _kubectl_comp_cache="$HOME/.kubectl_zsh_completion"
-  if [[ ! -f "$_kubectl_comp_cache" ]]; then
-    kubectl completion zsh >! "$_kubectl_comp_cache" 2>/dev/null
-  fi
-  source "$_kubectl_comp_cache"
-  compdef k=kubectl
-  compdef kc=kubectl
-fi
-
 # --------------------------------------------------
 # Plugins & Tools
 # --------------------------------------------------
@@ -127,9 +116,22 @@ source ~/.config/zsh/zsh-syntax-highlighting/theme.zsh
 export COREPACK_ENABLE_AUTO_PIN=0
 
 # --------------------------------------------------
-# Runtime versions (node, python, go, rust — replaces nvm/asdf)
+# Runtimes and tools (replaces nvm/asdf; see mise/config.toml)
 # --------------------------------------------------
 eval "$(mise activate zsh)"
+
+# kubectl completions (cached — regenerate by deleting ~/.kubectl_zsh_completion)
+# Must run after mise activate: kubectl is mise-managed, so the PATH built above
+# does not contain it and the guard below would silently never fire.
+if (( $+commands[kubectl] )); then
+  local _kubectl_comp_cache="$HOME/.kubectl_zsh_completion"
+  if [[ ! -f "$_kubectl_comp_cache" ]]; then
+    kubectl completion zsh >! "$_kubectl_comp_cache" 2>/dev/null
+  fi
+  source "$_kubectl_comp_cache"
+  compdef k=kubectl
+  compdef kc=kubectl
+fi
 
 # --------------------------------------------------
 # Per-project environment
@@ -226,13 +228,12 @@ export BUN_INSTALL="$HOME/.bun"
 # --------------------------------------------------
 # pnpm
 # --------------------------------------------------
-# pnpm is a corepack shim, so an uncached completion call spawns node on every
-# shell start and blocks on corepack's download prompt when its cache is cold.
-# Cached — regenerate by deleting ~/.pnpm_zsh_completion
+# Cached — generating completions spawns pnpm on every shell start otherwise.
+# Regenerate by deleting ~/.pnpm_zsh_completion
 if (( $+commands[pnpm] )); then
   local _pnpm_comp_cache="$HOME/.pnpm_zsh_completion"
   if [[ ! -f "$_pnpm_comp_cache" ]]; then
-    COREPACK_ENABLE_DOWNLOAD_PROMPT=0 pnpm completion zsh >! "$_pnpm_comp_cache" 2>/dev/null
+    pnpm completion zsh >! "$_pnpm_comp_cache" 2>/dev/null
   fi
   source "$_pnpm_comp_cache"
 fi

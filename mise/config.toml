@@ -7,6 +7,29 @@ rust = "stable"
 # project code behaves, so tracking latest costs nothing and saves bumps.
 uv = "latest"
 pnpm = "latest"
+act = "latest"
+actionlint = "latest"
+bat = "latest"
+fd = "latest"
+fzf = "latest"
+gh = "latest"
+k9s = "latest"
+lazygit = "latest"
+pandoc = "latest"
+ripgrep = "latest"
+shellcheck = "latest"
+starship = "latest"
+yazi = "latest"
+zoxide = "latest"
+
+# Pinned to the minor: kubectl supports one minor of skew either side of the
+# cluster, so this tracks the GKE clusters in the Phase 4 runbook, not latest.
+kubectl = "1.36"
+
+# Pinned to the major: upstream still tags v1 releases and "latest" resolves
+# into that abandoned series, which takes -instances= rather than the positional
+# form dbp() and corev2() use in zsh/functions.zsh.
+cloud-sql-proxy = "2"
 
 [settings]
 # Trust project-level .mise.toml only after explicit `mise trust`

@@ -140,15 +140,16 @@ gcloud container clusters get-credentials the-fa-sandbox-helix-obs-infra-cluster
 
 ## Conventions
 
-- **Runtimes** via `mise`, not nvm/asdf/rustup or a manual Go install. `mise/config.toml`
-  declares node, python, go and rust, plus the `uv` and `pnpm` tools; `mise install`
-  provisions the lot.
-  Per-project overrides via `.mise.toml`. `uv` is there rather than in the Brewfile so it
-  stays pinned alongside the python it resolves against, instead of moving on `brew upgrade`.
-- **`~/go/bin` is not reproducible.** Tools installed with `go install` (dlv, gotestsum,
-  cobra-cli, golines…) need reinstalling on a new machine. The ones nvim needs — gopls,
-  golangci-lint, gofumpt, goimports — are handled by `:Mason`, so only standalone CLI use
-  is affected.
+- **Runtimes and CLI tooling** via `mise`, not nvm/asdf/rustup or a manual Go install.
+  `mise/config.toml` declares node, python, go and rust alongside the CLI tools;
+  `mise install` provisions the lot. Per-project overrides via `.mise.toml`.
+- **The Brewfile keeps what mise cannot.** System libraries (`libpq`, `poppler`,
+  `gstreamer`, `pkgconf`), zsh plugins that are sourced from brew's `share/`, podman and
+  `krunkit`, the hook and daemon tools (`atuin`, `direnv`, `betterleaks`), `mise` itself,
+  and `btop`, whose mise package is Linux-only.
+- **Do not run `brew bundle cleanup --force`.** `GOBIN` points inside mise's go install, and
+  brew's `go` extension owns whatever `GOBIN` names — so cleanup reads go's own binary as an
+  untracked `go install` and deletes it. The bootstrap reports the drift instead.
 - **Per-project env** via `direnv`.
 - **Secrets never land in this repo.** `betterleaks` runs as a global pre-commit hook.
   Bypass with `--no-verify` only for confirmed false positives.
