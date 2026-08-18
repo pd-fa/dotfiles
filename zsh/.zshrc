@@ -207,8 +207,7 @@ fi
 
 # Alias completions. zsh resolves completion by the alias *name*, not what it
 # expands to, so every shorthand needs its own mapping — `vim` picks up _vim for
-# free but `v`/`vi`/`nv` do not, and `docker` finds nothing because _docker is
-# absent while _podman is present. Guarded: compdef errors on a missing target.
+# free but `v`/`vi`/`nv` do not. Guarded: compdef errors on a missing target.
 # Deliberately outside the nx markers above so regenerating that block keeps nxr.
 (( $+commands[nx] ))     && compdef nxr=nx
 (( $+commands[nvim] ))   && compdef v=vim
@@ -217,7 +216,6 @@ fi
 (( $+commands[eza] ))    && compdef ls=eza
 (( $+commands[eza] ))    && compdef ll=eza
 (( $+commands[eza] ))    && compdef lt=eza
-(( $+commands[podman] )) && compdef docker=podman
 compdef pe=printenv
 
 # --------------------------------------------------

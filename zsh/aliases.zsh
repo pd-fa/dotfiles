@@ -52,7 +52,6 @@ alias y='yazi'
 # Zoxide (smart cd)
 alias cd='z'
 alias cdi='zi'  # Interactive selection
-alias docker='podman'
 alias c='claude'
 alias cc='claude --continue'
 # Nx
