@@ -12,5 +12,5 @@
 [commit]
 	gpgsign = true
 [core]
-	hooksPath = /Users/PDolden/.config/git/hooks
+	hooksPath = ~/.config/git/hooks
 	excludesfile = ~/.config/git/ignore
