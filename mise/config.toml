@@ -3,8 +3,10 @@ node = "22"
 python = "3.13"
 go = "1.24"
 rust = "stable"
-# Tool, not a runtime — pinned so two machines resolve the same uv.
-uv = "0.12"
+# Tools, not runtimes. Unpinned: their version changes nothing about how
+# project code behaves, so tracking latest costs nothing and saves bumps.
+uv = "latest"
+pnpm = "latest"
 
 [settings]
 # Trust project-level .mise.toml only after explicit `mise trust`

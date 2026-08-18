@@ -141,7 +141,8 @@ gcloud container clusters get-credentials the-fa-sandbox-helix-obs-infra-cluster
 ## Conventions
 
 - **Runtimes** via `mise`, not nvm/asdf/rustup or a manual Go install. `mise/config.toml`
-  declares node, python, go and rust, plus `uv`; `mise install` provisions the lot.
+  declares node, python, go and rust, plus the `uv` and `pnpm` tools; `mise install`
+  provisions the lot.
   Per-project overrides via `.mise.toml`. `uv` is there rather than in the Brewfile so it
   stays pinned alongside the python it resolves against, instead of moving on `brew upgrade`.
 - **`~/go/bin` is not reproducible.** Tools installed with `go install` (dlv, gotestsum,
