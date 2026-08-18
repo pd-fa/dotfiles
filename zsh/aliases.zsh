@@ -12,6 +12,9 @@ alias quit='exit'
 alias quite='exit'
 ## Git
 alias lg='lazygit'
+## Tmux — attach to the most recent session, or start one if there is none.
+## Bare `tmux` always creates a fresh session, which is how 0/1/2… pile up.
+alias tmx='tmux attach 2>/dev/null || tmux new -s main'
 ## Neovim
 alias v='nvim'
 alias vi='nvim'
