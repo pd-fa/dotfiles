@@ -105,6 +105,8 @@ go "go.uber.org/mock/mockgen"
 go "github.com/kyoh86/richgo"
 go "github.com/caarlos0/svu"
 npm "codex"
+# corepack provides the yarn and pnpm shims and honours each repo's
+# packageManager field, so yarn must not also be installed standalone — the two
+# collide over /opt/homebrew/bin/yarn. Run `corepack enable` once after install.
 npm "corepack"
 npm "nx"
-npm "yarn"
