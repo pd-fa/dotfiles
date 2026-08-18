@@ -148,7 +148,7 @@ step "Installing language runtimes (mise)"
 if ! command -v mise >/dev/null; then
 	warn "mise not installed (brew bundle incomplete) — skipping runtimes"
 elif mise install; then
-	skip "node python go rust"
+	skip "node python go rust uv"
 else
 	warn "mise install failed — re-run once its prerequisites are present"
 fi
