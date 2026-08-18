@@ -1,6 +1,7 @@
 tap "anomalyco/tap"
 tap "fluxcd/tap"
 tap "hashicorp/tap"
+tap "libkrun/krun", trusted: { formulae: ["gvproxy", "libkrun", "libkrunfw", "virglrenderer"] }
 # Run your GitHub Actions locally
 brew "act"
 # Static checker for GitHub Actions workflow files
@@ -75,6 +76,12 @@ brew "zsh-syntax-highlighting"
 brew "zsh-vi-mode"
 # The AI coding agent built for the terminal.
 brew "anomalyco/tap/opencode", trusted: true
+# CLI tool to start Linux KVM or macOS HVF VMs using the libkrun
+# Required by podman: brew's podman formula ships gvproxy and vfkit but not
+# krunkit, and podman defaults to the libkrun provider on Apple Silicon, so
+# `podman machine start` fails without it. Not in homebrew-core because the
+# binary needs a Hypervisor.framework codesigning entitlement.
+brew "libkrun/krun/krunkit", trusted: true
 # Command-line interface for 1Password
 cask "1password-cli"
 # Terminal-based AI coding assistant

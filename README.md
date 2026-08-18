@@ -78,6 +78,13 @@ there.
 Phase 1 is deliberately not scripted — MDM, the 1Password GUI and Xcode CLT are all
 interactive.
 
+> **Gotcha:** Homebrew's `podman` formula ships `gvproxy` and `vfkit` but **not**
+> `krunkit`, and podman defaults to the `libkrun` provider on Apple Silicon — so a
+> CLI-only install dies at `podman machine start` with *"There is a problem finding
+> the 'krunkit' binary"*. The Brewfile pins the `libkrun/krun` tap and trusts its
+> formulae, so the bootstrap covers it. `krunkit` is absent from homebrew-core
+> because the binary needs a `Hypervisor.framework` codesigning entitlement.
+
 Apps not in the Brewfile:
 
 ```bash
