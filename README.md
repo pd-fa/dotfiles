@@ -37,6 +37,28 @@ git clone git@github.com:pd-fa/dotfiles.git ~/.config
 ~/.config/bootstrap.sh
 ```
 
+> **This repo is shared.** Nothing tracked in it names an individual. Your own
+> identity and machine-local settings live in two untracked files, which the
+> bootstrap seeds from their `.example` siblings on first run:
+>
+> | File | Holds |
+> |------|-------|
+> | `git/config.local` | `user.name`, `user.email`, `user.signingkey` — included last by `git/config` |
+> | `bootstrap.local` | `ATUIN_BACKUP_DOC` / `ATUIN_BACKUP_VAULT` for your own history restore |
+>
+> Fill in `git/config.local` before your first commit, or signing fails and the
+> bootstrap exits non-zero telling you so. Add your public key to
+> `git/allowed_signers` (tracked) so colleagues can verify your commits.
+>
+> `gh/hosts.yml` is untracked too — run `gh auth login` to write your own.
+>
+> **If you cloned before this change** you inherited the previous owner's
+> `git/config` identity and `gh/hosts.yml`. Both are fixed by pulling: the
+> identity is replaced by the genericised `git/config`, and `hosts.yml` is
+> deleted outright because this commit removes it from the repo. Then re-run the
+> bootstrap and fill in `git/config.local`. To drop a stale account gh still
+> remembers: `gh auth logout -u <name>`.
+
 Idempotent, so re-run it any time. It installs the Brewfile (CLI tools, casks and the
 **Nerd Font** — without which every glyph renders as tofu), links shell and agent config
 into `$HOME`, wires the git hooks, installs runtimes via mise, builds the bat theme cache,
@@ -74,8 +96,8 @@ restoring after atuin has created an empty db is messier.
 ### Phase 4 — Cloud access
 
 ```bash
-gh auth login                    # pd-fa account
-gcloud init                      # paul.dolden@thefa.com / the-fa-api-prod
+gh auth login                    # your own work GitHub account
+gcloud init                      # your own @thefa.com account / the-fa-api-prod
 
 gcloud container clusters get-credentials helix-monitoring \
   --zone europe-west2-a --project the-fa-helix-infra

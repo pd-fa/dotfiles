@@ -1,9 +1,5 @@
 [init]
 	defaultBranch = main
-[user]
-	name = paul dolden
-	email = paul.dolden@thefa.com
-	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvtQEA1GF5WjhMldr7klfVwz1+PUqIp8EDfP+Uonpwt
 [gpg]
 	format = ssh
 [gpg "ssh"]
@@ -14,3 +10,9 @@
 [core]
 	hooksPath = ~/.config/git/hooks
 	excludesfile = ~/.config/git/ignore
+# Per-person identity (user.name / user.email / user.signingkey) lives in an
+# untracked file so this repo can be shared between people. bootstrap.sh seeds
+# it from config.local.example. Included last so local values win.
+# A missing include path is silently ignored by git.
+[include]
+	path = ~/.config/git/config.local

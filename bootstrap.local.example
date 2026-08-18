@@ -1,0 +1,17 @@
+# Copy to ~/.config/bootstrap.local and fill in your own values.
+# That file is gitignored — it is per-person and must never be committed.
+#
+#   cp ~/.config/bootstrap.local.example ~/.config/bootstrap.local
+#
+# Sourced by bootstrap.sh before anything else runs. Keep it to plain variable
+# assignments; it is not a place for commands.
+
+# 1Password document holding your atuin shell-history backup, and the vault it
+# lives in. Shell history is personal — leave ATUIN_BACKUP_DOC empty to start
+# with a fresh, empty history instead.
+#
+# Create a backup with:
+#   tar czf - -C ~/.local/share atuin \
+#     | op document create - --title "atuin history backup $(date +%F)" --vault Private
+ATUIN_BACKUP_DOC=""
+ATUIN_BACKUP_VAULT="Private"

@@ -7,6 +7,13 @@ github-copilot/
 1Password/
 .jira
 
+# Per-person identity and machine-local settings — this repo is shared, so
+# anything naming an individual stays out of it. Seeded from the matching
+# .example files by bootstrap.sh.
+git/config.local
+bootstrap.local
+gh/hosts.yml
+
 # Machine-local tool state
 configstore/
 containers/

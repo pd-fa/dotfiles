@@ -1,0 +1,17 @@
+# Copy to ~/.config/git/config.local and fill in your own details.
+# That file is gitignored — it is per-person and must never be committed.
+#
+#   cp ~/.config/git/config.local.example ~/.config/git/config.local
+#
+# The signing key is your SSH *public* key. With the 1Password agent it is under
+# Settings > Developer > "Sign Git commits with SSH", or: op item get <key> --fields public_key
+#
+# After setting it, add yourself to git/allowed_signers (tracked, shared) so
+# colleagues can verify your commits:
+#
+#   you@example.com ssh-ed25519 AAAA...
+
+[user]
+	name = Your Name
+	email = you@example.com
+	signingkey = ssh-ed25519 AAAA...

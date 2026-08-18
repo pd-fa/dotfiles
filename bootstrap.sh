@@ -16,6 +16,13 @@ skip() { printf '    \033[2m%s\033[0m\n' "$1"; }
 warn() { printf '    \033[1;33m!\033[0m %s\n' "$1"; FAILED="${FAILED}  - $1"$'\n'; }
 FAILED=""
 
+# Per-person settings. This repo is shared, so nothing here names an individual;
+# bootstrap.local is untracked and seeded from bootstrap.local.example.
+# shellcheck source=/dev/null
+[ -f "$CONFIG/bootstrap.local" ] && . "$CONFIG/bootstrap.local"
+ATUIN_BACKUP_DOC="${ATUIN_BACKUP_DOC:-}"
+ATUIN_BACKUP_VAULT="${ATUIN_BACKUP_VAULT:-Private}"
+
 [ -d "$CONFIG/.git" ] || { echo "Run after cloning this repo to ~/.config" >&2; exit 1; }
 
 step "Checking prerequisites"
@@ -46,12 +53,42 @@ skip "settings.json + $(find "$CONFIG/ai/skills" -maxdepth 1 -mindepth 1 -type d
 
 step "Configuring git hooks"
 # Set as a tilde path rather than "$CONFIG" so the value committed to git/config
-# stays portable — home directories differ between machines (PDolden vs
-# Paul.Dolden). Git expands ~ in core.hooksPath, as it does for excludesfile.
+# stays portable — home directory names differ from one machine to the next.
+# Git expands ~ in core.hooksPath, as it does for excludesfile.
 # shellcheck disable=SC2088  # literal ~ is deliberate: git expands it, not the shell
 git config --global core.hooksPath '~/.config/git/hooks'
 chmod +x "$CONFIG/git/hooks/"* 2>/dev/null || true
 skip "core.hooksPath -> git/hooks (betterleaks pre-commit)"
+
+step "Seeding per-person git identity"
+# git/config is shared and carries no name or email; identity lives in the
+# untracked config.local, which git/config includes last.
+if [ ! -f "$CONFIG/git/config.local" ]; then
+	cp "$CONFIG/git/config.local.example" "$CONFIG/git/config.local"
+	warn "git/config.local created — fill in your name, email and signingkey"
+fi
+email=$(git config --get user.email || true)
+if [ -z "$email" ] || [ "${email##*@}" = "example.com" ]; then
+	warn "git identity is unset or still the example — edit git/config.local before committing"
+else
+	skip "identity: $email"
+fi
+
+step "Checking gh account"
+# gh/hosts.yml is untracked, so pulling the commit that removed it deletes any
+# inherited copy — that is what actually clears someone else's account. This
+# step only reports, and deliberately does not delete: an unauthenticated
+# hosts.yml usually means an expired token, which is routine, and throwing the
+# file away over it would cost you your account list for no reason.
+if [ ! -f "$CONFIG/gh/hosts.yml" ]; then
+	skip "no gh/hosts.yml — gh auth login will create one"
+elif ! command -v gh >/dev/null; then
+	skip "gh not installed — skipping check"
+elif gh auth status >/dev/null 2>&1; then
+	skip "authenticated as $(gh api user --jq .login 2>/dev/null || echo 'unknown')"
+else
+	warn "gh/hosts.yml has no valid token — run 'gh auth login' (or 'gh auth logout -u <name>' to drop an account that is not yours)"
+fi
 
 step "Installing packages (brew bundle)"
 # Non-fatal: one unavailable package must not abandon the rest of the bootstrap.
@@ -97,12 +134,16 @@ if ! python3 "$CONFIG/ai/sync-mcp.py"; then
 fi
 
 step "Restoring atuin history"
+# Shell history is personal: the backup document is named in the untracked
+# bootstrap.local, never here, so a colleague's run cannot pull someone else's.
 if [ -f "$HOME/.local/share/atuin/history.db" ]; then
 	skip "history.db already present — leaving it alone"
+elif [ -z "$ATUIN_BACKUP_DOC" ]; then
+	skip "no ATUIN_BACKUP_DOC set in bootstrap.local — starting with empty history"
 elif command -v op >/dev/null && op account list >/dev/null 2>&1; then
 	mkdir -p "$HOME/.local/share"
 	tmp=$(mktemp -d)
-	if op document get "atuin history backup 2026-08-17" --vault Work \
+	if op document get "$ATUIN_BACKUP_DOC" --vault "$ATUIN_BACKUP_VAULT" \
 		--output "$tmp/atuin.tar.gz" >/dev/null 2>&1; then
 		tar xzf "$tmp/atuin.tar.gz" -C "$HOME/.local/share"
 		skip "restored from 1Password"
@@ -120,8 +161,10 @@ cat <<'EOF'
       exec zsh -l          reload the shell
       nvim                 LazyVim installs plugins, then :Mason
       tmux                 tpm self-bootstraps and installs plugins
-      gh auth login        pd-fa account
-      gcloud init          paul.dolden@thefa.com / the-fa-api-prod
+      gh auth login        your own work GitHub account
+      gcloud init          your own @thefa.com account / the-fa-api-prod
+
+    Check git/config.local holds your name, email and signing key.
 EOF
 
 if [ -n "$FAILED" ]; then

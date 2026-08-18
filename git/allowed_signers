@@ -1,1 +1,9 @@
+# Shared roster of SSH public keys whose commit signatures we trust.
+# Public keys only — nothing secret here. Append one line per person:
+#
+#   you@example.com ssh-ed25519 AAAA...
+#
+# This is the one identity-bearing file that stays tracked, because verifying
+# a colleague's signature requires having their key. Your *own* signing key
+# also goes in the untracked git/config.local.
 paul.dolden@thefa.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHvtQEA1GF5WjhMldr7klfVwz1+PUqIp8EDfP+Uonpwt
