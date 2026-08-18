@@ -226,7 +226,16 @@ export BUN_INSTALL="$HOME/.bun"
 # --------------------------------------------------
 # pnpm
 # --------------------------------------------------
-(( $+commands[pnpm] )) && source <(pnpm completion zsh 2>/dev/null)
+# pnpm is a corepack shim, so an uncached completion call spawns node on every
+# shell start and blocks on corepack's download prompt when its cache is cold.
+# Cached — regenerate by deleting ~/.pnpm_zsh_completion
+if (( $+commands[pnpm] )); then
+  local _pnpm_comp_cache="$HOME/.pnpm_zsh_completion"
+  if [[ ! -f "$_pnpm_comp_cache" ]]; then
+    COREPACK_ENABLE_DOWNLOAD_PROMPT=0 pnpm completion zsh >! "$_pnpm_comp_cache" 2>/dev/null
+  fi
+  source "$_pnpm_comp_cache"
+fi
 
 # --------------------------------------------------
 # Local environment loader (if exists)
