@@ -23,6 +23,7 @@ alias zshenv='nvim ~/.zshenv'
 alias zprofile='nvim ~/.config/zsh/.zprofile'
 ## Dotfiles
 alias dot='cd ~/.config/ && nvim'
+alias dotup='cd ~/.config/ && git pull'
 alias appsup='cd ~/Library/Application\ Support/ && nvim'
 ## Printenv
 alias pe='printenv'
