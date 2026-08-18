@@ -29,10 +29,10 @@ palette = "tokyonight"
 style = "bold blue"
 truncation_length = 3
 truncate_to_repo = true
-read_only = " "
+read_only = " \U000F033E"
 
 [git_branch]
-symbol = " "
+symbol = "\uF418 "
 style = "purple"
 format = "on [$symbol$branch]($style) "
 
@@ -44,7 +44,7 @@ ahead = "⇡${count} "
 behind = "⇣${count} "
 diverged = "⇕⇡${ahead_count}⇣${behind_count} "
 untracked = "?${count} "
-stashed = " "
+stashed = "\uF01C "
 modified = "!${count} "
 staged = "+${count} "
 renamed = "»${count} "
@@ -53,7 +53,7 @@ deleted = "✘${count} "
 # Cluster context matters more than gcloud project for day-to-day GKE work
 [kubernetes]
 disabled = false
-symbol = "☸ "
+symbol = "\U000F10FE "
 style = "cyan"
 format = '[$symbol$context( \($namespace\))]($style) '
 
@@ -62,22 +62,22 @@ context_pattern = "gke_(?P<project>[\\w-]+)_(?P<zone>[\\w-]+)_(?P<cluster>[\\w-]
 context_alias = "$cluster"
 
 [nodejs]
-symbol = " "
+symbol = "\uE718 "
 style = "green"
 format = "[$symbol($version)]($style) "
 
 [python]
-symbol = " "
+symbol = "\uE235 "
 style = "green"
 format = "[$symbol($version)]($style) "
 
 [golang]
-symbol = " "
+symbol = "\uE627 "
 style = "cyan"
 format = "[$symbol($version)]($style) "
 
 [rust]
-symbol = " "
+symbol = "\U000F1617 "
 style = "orange"
 format = "[$symbol($version)]($style) "
 
