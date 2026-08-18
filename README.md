@@ -32,9 +32,10 @@ git clone git@github.com:pd-fa/dotfiles.git ~/.config
 > `~/.ssh/id_ed25519` from the old machine — the key lives in 1Password.
 
 > **Gotcha:** MDM-pushed installers (the Xerox print client is one) can create
-> `~/Library/LaunchAgents` owned by **root**. Every `brew services` start then
-> fails with `Permission denied @ rb_sysopen`. The bootstrap checks for this and
-> tells you; the fix is:
+> `~/Library/LaunchAgents` owned by **root**, which makes any `brew services`
+> start fail with `Permission denied @ rb_sysopen`. Nothing in the Brewfile
+> registers a service today, so the bootstrap only notes it. If you ever add a
+> formula with `restart_service:`, the fix is:
 >
 > ```bash
 > sudo chown "$(id -un)" ~/Library/LaunchAgents

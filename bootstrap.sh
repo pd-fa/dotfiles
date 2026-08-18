@@ -93,10 +93,12 @@ fi
 step "Checking ~/Library/LaunchAgents is writable"
 # Some MDM-pushed installers (the Xerox print client, for one) create this
 # directory as root, which makes every `brew services` start fail with an
-# opaque "Permission denied @ rb_sysopen". Catch it here and say what to do.
+# opaque "Permission denied @ rb_sysopen". Nothing in the Brewfile currently
+# registers a service, so this is a note rather than a warning — it does not
+# fail the run. It matters the moment a formula with `restart_service:` is added.
 if [ -d "$HOME/Library/LaunchAgents" ] && [ ! -w "$HOME/Library/LaunchAgents" ]; then
 	# shellcheck disable=SC2088  # literal ~ is deliberate: this is a message to copy-paste
-	warn "~/Library/LaunchAgents is owned by $(stat -f %Su "$HOME/Library/LaunchAgents") — brew services cannot start; fix with: sudo chown $(id -un) ~/Library/LaunchAgents"
+	skip "owned by $(stat -f %Su "$HOME/Library/LaunchAgents"), not you — harmless today, but brew services would fail; fix with: sudo chown $(id -un) ~/Library/LaunchAgents"
 else
 	skip "writable"
 fi

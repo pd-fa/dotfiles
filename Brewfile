@@ -6,7 +6,11 @@ brew "act"
 # Static checker for GitHub Actions workflow files
 brew "actionlint"
 # Improved shell history for zsh, bash, fish and nushell
-brew "atuin", restart_service: :changed
+# No restart_service: the formula's service runs `atuin daemon start`, but the
+# daemon is opt-in and atuin/config.toml does not set [daemon] enabled = true,
+# so the client writes to sqlite directly and the service would idle. Starting
+# it also fails outright wherever ~/Library/LaunchAgents is root-owned.
+brew "atuin"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Secrets scanner built for configurability and speed
