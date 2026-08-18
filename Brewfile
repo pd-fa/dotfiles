@@ -82,6 +82,9 @@ cask "claude-code"
 # Brings the power of Copilot coding agent directly to your terminal
 cask "copilot-cli"
 cask "font-zed-mono-nerd-font"
+# Google Cloud CLI — gcloud, gsutil, bq. Cask is named gcloud-cli; the old
+# google-cloud-sdk name is an alias. Required by the Phase 4 cloud runbook.
+cask "gcloud-cli"
 go "golang.org/x/tools/cmd/callgraph"
 go "github.com/spf13/cobra-cli"
 go "github.com/go-delve/delve/cmd/dlv"

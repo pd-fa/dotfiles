@@ -26,6 +26,8 @@ path=(
 )
 
 # Google Cloud SDK (eager PATH, lazy completions)
+# The gcloud-cli cask symlinks gcloud/bq/gsutil straight into $HOMEBREW_PREFIX/bin,
+# which is already on PATH — this line only covers a manual tarball install.
 [[ -d "$HOME/google-cloud-sdk/bin" ]] && path+=("$HOME/google-cloud-sdk/bin")
 
 # User tool paths
@@ -137,10 +139,15 @@ eval "$(direnv hook zsh)"
 # --------------------------------------------------
 # Lazy Load Google Cloud SDK (completions only, PATH set above)
 # --------------------------------------------------
+# Checks the gcloud-cli cask location first, then a manual tarball install.
 lazy_load_gcloud_completions() {
-  if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then
-    . "$HOME/google-cloud-sdk/completion.zsh.inc"
-  fi
+  local inc
+  for inc in \
+    "${HOMEBREW_PREFIX:-/opt/homebrew}/share/google-cloud-sdk/completion.zsh.inc" \
+    "$HOME/google-cloud-sdk/completion.zsh.inc"
+  do
+    [[ -f "$inc" ]] && { . "$inc"; return }
+  done
 }
 
 gcloud() {
