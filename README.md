@@ -69,7 +69,9 @@ git clone git@github.com:pd-fa/dotfiles.git ~/.config
 > bootstrap and fill in `git/config.local`. To drop a stale account gh still
 > remembers: `gh auth logout -u <name>`.
 
-Idempotent, so re-run it any time. It installs the Brewfile (CLI tools, casks and the
+Idempotent, so re-run it any time — the `bootstrap` alias runs it and reloads the shell in
+one go, which is the normal way to pick up a change to this repo. It installs the Brewfile
+(CLI tools, casks and the
 **Nerd Font** — without which every glyph renders as tofu), links shell and agent config
 into `$HOME`, wires the git hooks, installs runtimes via mise, builds the bat theme cache,
 brings up the podman machine, renders the MCP configs, and restores atuin history from

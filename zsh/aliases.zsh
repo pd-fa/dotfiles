@@ -1,6 +1,11 @@
 ## Refresh
 alias refresh='exec zsh -l'
 alias rf='exec zsh -l'
+## Bootstrap — install/refresh all tooling, then reload the shell. Idempotent.
+## Sequenced with ; not && because bootstrap.sh exits non-zero on warnings by
+## design, and those are routine — && would skip the reload exactly when the
+## new state is what you want to see.
+alias bootstrap='~/.config/bootstrap.sh; exec zsh -l'
 ## Quit
 alias q='exit'
 alias quit='exit'
