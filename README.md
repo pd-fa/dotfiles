@@ -146,7 +146,9 @@ gcloud container clusters get-credentials the-fa-sandbox-helix-obs-infra-cluster
 - **Secrets never land in this repo.** `betterleaks` runs as a global pre-commit hook.
   Bypass with `--no-verify` only for confirmed false positives.
 - **Machine-local state** (`gcloud/`, `raycast/`, `github-copilot/`, `1Password/`) is gitignored.
-- `DOCKER_HOST` derives from `$TMPDIR` — never hardcode the `/var/folders` ID, it differs per machine.
+- `DOCKER_HOST` derives from `$TMPDIR` — never hardcode the `/var/folders` ID, it differs per
+  machine. The socket is named after the podman machine (`podman-machine-default-api.sock`),
+  so renaming the machine breaks it silently.
 
 ## AI tooling
 
