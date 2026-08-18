@@ -74,22 +74,6 @@ else
 	skip "identity: $email"
 fi
 
-step "Checking gh account"
-# gh/hosts.yml is untracked, so pulling the commit that removed it deletes any
-# inherited copy — that is what actually clears someone else's account. This
-# step only reports, and deliberately does not delete: an unauthenticated
-# hosts.yml usually means an expired token, which is routine, and throwing the
-# file away over it would cost you your account list for no reason.
-if [ ! -f "$CONFIG/gh/hosts.yml" ]; then
-	skip "no gh/hosts.yml — gh auth login will create one"
-elif ! command -v gh >/dev/null; then
-	skip "gh not installed — skipping check"
-elif gh auth status >/dev/null 2>&1; then
-	skip "authenticated as $(gh api user --jq .login 2>/dev/null || echo 'unknown')"
-else
-	warn "gh/hosts.yml has no valid token — run 'gh auth login' (or 'gh auth logout -u <name>' to drop an account that is not yours)"
-fi
-
 step "Checking ~/Library/LaunchAgents is writable"
 # Some MDM-pushed installers (the Xerox print client, for one) create this
 # directory as root, which makes every `brew services` start fail with an
@@ -148,9 +132,51 @@ step "Installing language runtimes (mise)"
 if ! command -v mise >/dev/null; then
 	warn "mise not installed (brew bundle incomplete) — skipping runtimes"
 elif mise install; then
-	skip "node python go rust uv pnpm"
+	# Everything below runs in this bash process, which never sourced the shell
+	# config — without this the mise-managed tools are simply absent and later
+	# checks silently report them missing.
+	PATH="$(mise bin-paths | tr '\n' ':')$PATH"
+	skip "runtimes and CLI tooling"
 else
 	warn "mise install failed — re-run once its prerequisites are present"
+fi
+
+step "Checking gh account"
+# gh/hosts.yml is untracked, so pulling the commit that removed it deletes any
+# inherited copy — that is what actually clears someone else's account. This
+# step only reports, and deliberately does not delete: an unauthenticated
+# hosts.yml usually means an expired token, which is routine, and throwing the
+# file away over it would cost you your account list for no reason.
+if [ ! -f "$CONFIG/gh/hosts.yml" ]; then
+	skip "no gh/hosts.yml — gh auth login will create one"
+elif ! command -v gh >/dev/null; then
+	skip "gh not installed — skipping check"
+elif gh auth status >/dev/null 2>&1; then
+	skip "authenticated as $(gh api user --jq .login 2>/dev/null || echo 'unknown')"
+else
+	warn "gh/hosts.yml has no valid token — run 'gh auth login' (or 'gh auth logout -u <name>' to drop an account that is not yours)"
+fi
+
+step "Checking brew for packages the Brewfile dropped"
+# A tool that moves to mise leaves its formula behind, and the stale copy keeps
+# answering wherever mise activation does not reach — scripts run with a plain
+# PATH, GUI launches, MCP servers spawned without a shell. A fresh machine never
+# accumulates this; only one that predates a move does. Reported rather than
+# removed, because --force would equally take anything installed deliberately
+# outside the Brewfile.
+if ! command -v brew >/dev/null; then
+	skip "brew missing — skipping drift check"
+else
+	# cleanup exits 1 whenever it finds anything to remove, and it always finds
+	# cmd/go — see the GOBIN note in the README — so without the guard errexit
+	# would abort the run here, skipping every step below.
+	stale=$(brew bundle cleanup --file="$CONFIG/Brewfile" 2>/dev/null |
+		awk '/^Would uninstall formulae:/{f=1;next} /^Would |^Run /{f=0} f&&NF{c++} END{print c+0}' || true)
+	if [ "$stale" -eq 0 ]; then
+		skip "brew matches the Brewfile"
+	else
+		warn "$stale brew formulae are not in the Brewfile — review 'brew bundle cleanup --file=$CONFIG/Brewfile', then re-run it with --force"
+	fi
 fi
 
 step "Building bat theme cache"
