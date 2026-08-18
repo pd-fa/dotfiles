@@ -112,6 +112,27 @@ else
 	warn "brew bundle failed — re-run after resolving; see 'brew bundle check --verbose'"
 fi
 
+step "Starting the podman machine"
+# The Linux VM that actually runs containers is machine-local state, so brew
+# cannot create it. krunkit is the hypervisor binary for podman's default
+# libkrun provider on Apple Silicon and is missing from brew's podman formula,
+# which is why the Brewfile pins the libkrun/krun tap — without it, init fails.
+if ! command -v podman >/dev/null; then
+	warn "podman not installed (brew bundle incomplete) — skipping machine init"
+elif ! podman machine inspect podman-machine-default >/dev/null 2>&1; then
+	if podman machine init --now; then
+		skip "podman-machine-default created and started"
+	else
+		warn "podman machine init failed — check krunkit installed: brew list krunkit"
+	fi
+elif [ "$(podman machine inspect podman-machine-default --format '{{.State}}' 2>/dev/null)" = "running" ]; then
+	skip "podman-machine-default already running"
+elif podman machine start; then
+	skip "podman-machine-default started"
+else
+	warn "podman machine start failed — check krunkit installed: brew list krunkit"
+fi
+
 step "Ensuring rustup is present"
 # mise's rust plugin drives rustup rather than shipping a toolchain, and its
 # install dir is a symlink to ~/.cargo/bin — so rustup must exist first.

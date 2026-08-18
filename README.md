@@ -72,8 +72,8 @@ git clone git@github.com:pd-fa/dotfiles.git ~/.config
 Idempotent, so re-run it any time. It installs the Brewfile (CLI tools, casks and the
 **Nerd Font** — without which every glyph renders as tofu), links shell and agent config
 into `$HOME`, wires the git hooks, installs runtimes via mise, builds the bat theme cache,
-renders the MCP configs, and restores atuin history from 1Password if it isn't already
-there.
+brings up the podman machine, renders the MCP configs, and restores atuin history from
+1Password if it isn't already there.
 
 Phase 1 is deliberately not scripted — MDM, the 1Password GUI and Xcode CLT are all
 interactive.
@@ -90,7 +90,6 @@ Apps not in the Brewfile:
 ```bash
 brew install --cask podman-desktop dia obsidian raycast
 gcloud components install gke-gcloud-auth-plugin
-podman machine init && podman machine start
 ```
 
 Teams, Defender, FortiClient and LucidLink arrive via Jamf — don't brew them.
