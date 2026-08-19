@@ -1,0 +1,55 @@
+/* Generated from theme/palette.toml by theme/sync-theme.py — do not edit.
+ *
+ * Loaded by `colourscheme pinknight` in tridactyl/tridactylrc. Tridactyl reads
+ * custom themes from <dir of tridactylrc>/themes/<name>.css, which is this
+ * path, so no symlink is involved — but it reads them through the native
+ * messenger, so `:installnative` must have run first or the command errors
+ * with "Couldn't read theme".
+ *
+ * Variables only. Tridactyl's base stylesheet supplies the layout and reads
+ * every colour through these names, so overriding structure here would fork
+ * upstream CSS for no gain.
+ */
+
+:root {
+  --tridactyl-font-family: "ZedMono Nerd Font", monospace;
+  --tridactyl-bg: #150e18;
+  --tridactyl-fg: #ffd6ec;
+
+  --tridactyl-cmdl-bg: #150e18;
+  --tridactyl-cmdl-fg: #ffd6ec;
+  --tridactyl-cmdl-font-size: 14px;
+
+  --tridactyl-cmplt-bg: #1c1420;
+  --tridactyl-cmplt-fg: #ffd6ec;
+  --tridactyl-cmplt-option-bg: #1c1420;
+  --tridactyl-cmplt-option-fg: #c99ab4;
+  --tridactyl-cmplt-option-focus-bg: #412a3d;
+  --tridactyl-cmplt-option-focus-fg: #ffd6ec;
+  --tridactyl-cmplt-sectionheader-bg: #6b2a54;
+  --tridactyl-cmplt-sectionheader-fg: #ff4fa3;
+
+  /* Mode indicator, bottom-right. err carries meaning here — it is what
+   * distinguishes ignore mode from normal mode at a glance. */
+  --tridactyl-status-bg: #6b2a54;
+  --tridactyl-status-fg: #ffd6ec;
+  --tridactyl-status-border: 1px solid #ff4fa3;
+
+  /* Hint tags. accent_bright on ink is the highest-contrast pair in the
+   * palette, which is the whole job of a hint. */
+  --tridactyl-hintspan-bg: #ff7ab8;
+  --tridactyl-hintspan-fg: #1a0f18;
+  --tridactyl-hintspan-font-size: 11px;
+  --tridactyl-hintspan-border-color: #c93d80;
+  --tridactyl-hintspan-border-width: 1px;
+
+  --tridactyl-hintspan-active-bg: #e0af68;
+  --tridactyl-hintspan-active-fg: #1a0f18;
+
+  --tridactyl-hint-bg: #412a3d;
+  --tridactyl-hint-outline: 1px solid #ff4fa3;
+  --tridactyl-hint-active-bg: #c93d80;
+  --tridactyl-hint-active-outline: 1px solid #ff7ab8;
+
+  --tridactyl-search-highlight-color: #e0af68;
+}

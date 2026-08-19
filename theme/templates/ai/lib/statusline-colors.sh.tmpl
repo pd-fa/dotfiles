@@ -1,0 +1,9 @@
+# Generated from theme/palette.toml by theme/sync-theme.py -- do not edit.
+# shellcheck shell=bash
+# Sourced by statusline-render.sh. Truecolor rather than the 256-colour cube,
+# which cannot land on an arbitrary palette exactly.
+
+# shellcheck disable=SC2034  # consumed by statusline-render.sh and its adapters
+SL_DIM=$'\033[2m'; SL_RESET=$'\033[0m'; SL_BOLD=$'\033[1m'
+SL_ACCENT=$'\033[38;2;{{accent:rgb}}m'; SL_GREEN=$'\033[38;2;{{ok:rgb}}m'
+SL_AMBER=$'\033[38;2;{{warn:rgb}}m'; SL_RED=$'\033[38;2;{{err:rgb}}m'

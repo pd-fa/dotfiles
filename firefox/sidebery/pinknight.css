@@ -1,0 +1,27 @@
+/* Generated from theme/palette.toml by theme/sync-theme.py — do not edit.
+ *
+ * Sidebery keeps its styles in extension storage, not on disk, so this file
+ * cannot be symlinked anywhere — paste it into Sidebery settings > Styles
+ * editor > Sidebar, then export the settings to firefox/sidebery-settings.json
+ * so the paste survives a rebuild. It is generated rather than hand-written so
+ * a palette retune reaches the sidebar instead of stopping at the chrome.
+ *
+ * Sidebery defines every internal colour as var(--s-NAME, fallback), so these
+ * twelve --s-* names are its whole supported theming surface. Anything else in
+ * the sidebar is a private class that renames without warning.
+ */
+
+#root.root {
+  --s-frame-bg: #150e18;
+  --s-frame-fg: #ffd6ec;
+  --s-toolbar-bg: #4d1f3d;
+  --s-toolbar-fg: #c99ab4;
+  --s-toolbar-border: #412a3d;
+  --s-accent: #ff4fa3;
+  --s-act-el-bg: #412a3d;
+  --s-act-el-fg: #ffd6ec;
+  --s-act-el-border: #ff4fa3;
+  --s-popup-bg: #6b2a54;
+  --s-popup-fg: #ffd6ec;
+  --s-popup-border: #412a3d;
+}

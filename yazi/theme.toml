@@ -6,7 +6,7 @@
 cwd = { fg = "#ff4fa3" }
 
 # Hovered
-hovered = { fg = "#1c1420", bg = "#ff4fa3" }
+hovered = { fg = "#16111f", bg = "#ff4fa3" }
 preview_hovered = { underline = true }
 
 # Find
@@ -19,13 +19,13 @@ marker_copied = { fg = "#e0af68", bg = "#e0af68" }
 marker_cut = { fg = "#f7768e", bg = "#f7768e" }
 
 # Tab
-tab_active = { fg = "#1c1420", bg = "#ff4fa3" }
-tab_inactive = { fg = "#c99ab4", bg = "#2a1c2b" }
+tab_active = { fg = "#16111f", bg = "#ff4fa3" }
+tab_inactive = { fg = "#c99ab4", bg = "#221a33" }
 tab_width = 1
 
 # Border
 border_symbol = "│"
-border_style = { fg = "#412a3d" }
+border_style = { fg = "#2f2348" }
 
 # Highlighting
 syntect_theme = ""
@@ -33,24 +33,24 @@ syntect_theme = ""
 [status]
 separator_open = ""
 separator_close = ""
-separator_style = { fg = "#412a3d", bg = "#412a3d" }
+separator_style = { fg = "#2f2348", bg = "#2f2348" }
 
 # Mode
-mode_normal = { fg = "#1c1420", bg = "#ff4fa3", bold = true }
-mode_select = { fg = "#1c1420", bg = "#9ece6a", bold = true }
-mode_unset = { fg = "#1c1420", bg = "#bb9af7", bold = true }
+mode_normal = { fg = "#16111f", bg = "#ff4fa3", bold = true }
+mode_select = { fg = "#16111f", bg = "#9ece6a", bold = true }
+mode_unset = { fg = "#16111f", bg = "#bb9af7", bold = true }
 
 # Progress
 progress_label = { fg = "#ffd6ec", bold = true }
-progress_normal = { fg = "#ff4fa3", bg = "#412a3d" }
-progress_error = { fg = "#f7768e", bg = "#412a3d" }
+progress_normal = { fg = "#ff4fa3", bg = "#2f2348" }
+progress_error = { fg = "#f7768e", bg = "#2f2348" }
 
 # Permissions
 permissions_t = { fg = "#9ece6a" }
 permissions_r = { fg = "#e0af68" }
 permissions_w = { fg = "#f7768e" }
 permissions_x = { fg = "#7dcfff" }
-permissions_s = { fg = "#8a6b7d" }
+permissions_s = { fg = "#8a7a9e" }
 
 [input]
 border = { fg = "#ff4fa3" }
@@ -69,19 +69,19 @@ title = {}
 hovered = { underline = true }
 
 [which]
-mask = { bg = "#150e18" }
+mask = { bg = "#100c17" }
 cand = { fg = "#7dcfff" }
-rest = { fg = "#8a6b7d" }
+rest = { fg = "#8a7a9e" }
 desc = { fg = "#bb9af7" }
 separator = "  "
-separator_style = { fg = "#8a6b7d" }
+separator_style = { fg = "#8a7a9e" }
 
 [help]
 on = { fg = "#9ece6a" }
 run = { fg = "#bb9af7" }
 desc = {}
-hovered = { bg = "#412a3d", bold = true }
-footer = { fg = "#412a3d", bg = "#ffd6ec" }
+hovered = { bg = "#2f2348", bold = true }
+footer = { fg = "#2f2348", bg = "#ffd6ec" }
 
 [filetype]
 

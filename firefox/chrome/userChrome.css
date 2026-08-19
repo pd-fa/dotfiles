@@ -1,0 +1,95 @@
+/* Generated from theme/palette.toml by theme/sync-theme.py — do not edit.
+ *
+ * Requires toolkit.legacyUserProfileCustomizations.stylesheets, set in
+ * firefox/user.js. Without that pref this file is never read at all.
+ *
+ * Firefox chrome selectors are internal, not API. When a Firefox update breaks
+ * the layout, this file is the first suspect — check the Browser Toolbox
+ * rather than assuming the palette drifted.
+ */
+
+:root {
+  --lwt-accent-color: #150e18 !important;
+  --lwt-text-color: #ffd6ec !important;
+  --toolbar-bgcolor: #4d1f3d !important;
+  --toolbar-color: #ffd6ec !important;
+  --toolbar-field-background-color: #2a1c2b !important;
+  --toolbar-field-color: #ffd6ec !important;
+  --toolbar-field-focus-background-color: #1c1420 !important;
+  --toolbar-field-focus-border-color: #ff4fa3 !important;
+  --toolbar-field-border-color: transparent !important;
+  --arrowpanel-background: #6b2a54 !important;
+  --arrowpanel-color: #ffd6ec !important;
+  --arrowpanel-border-color: #412a3d !important;
+  --focus-outline-color: #ff4fa3 !important;
+  --urlbar-box-bgcolor: #2a1c2b !important;
+  --urlbar-box-text-color: #c99ab4 !important;
+  --sidebar-background-color: #150e18 !important;
+  --sidebar-text-color: #ffd6ec !important;
+  --sidebar-border-color: #412a3d !important;
+}
+
+/* Sidebery owns tab display, so the native strip is dead weight. `visibility:
+ * collapse` and not `display: none` — display:none detaches the strip from the
+ * focus ring and takes Ctrl-Tab and the tab-close shortcuts with it. */
+#TabsToolbar {
+  visibility: collapse !important;
+}
+
+/* With the strip gone macOS draws the traffic lights over the toolbar. The root
+ * attribute was renamed tabsintitlebar -> customtitlebar, so both are matched:
+ * a stale selector is inert, a missing one costs 78px of overlapped chrome. */
+:root[tabsintitlebar] #nav-bar,
+:root[customtitlebar] #nav-bar {
+  padding-inline-start: 78px !important;
+}
+
+/* Fullscreen hides the traffic lights, so the reservation would be dead space. */
+:root[inFullscreen] #nav-bar {
+  padding-inline-start: 0 !important;
+}
+
+/* Sidebery draws its own header, search field and panel switcher. */
+#sidebar-header {
+  display: none !important;
+}
+
+#sidebar-box {
+  background-color: #150e18 !important;
+}
+
+#sidebar-splitter {
+  border: 0 !important;
+  min-width: 1px !important;
+  background-color: #412a3d !important;
+}
+
+#navigator-toolbox {
+  border-bottom: 1px solid #412a3d !important;
+}
+
+#urlbar[focused="true"] > #urlbar-background {
+  box-shadow: 0 0 0 1px #ff4fa3 !important;
+}
+
+/* The urlbar results panel, which does not inherit --arrowpanel-*. */
+.urlbarView {
+  background-color: #6b2a54 !important;
+  color: #ffd6ec !important;
+}
+
+.urlbarView-row[selected],
+.urlbarView-row:hover {
+  background-color: #412a3d !important;
+}
+
+.urlbarView-title strong,
+.urlbarView-url {
+  color: #ff7ab8 !important;
+}
+
+findbar {
+  background-color: #4d1f3d !important;
+  color: #ffd6ec !important;
+  border-top: 1px solid #412a3d !important;
+}

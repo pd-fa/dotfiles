@@ -42,6 +42,7 @@
     "terraform@claude-plugins-official": false
   },
   "effortLevel": "xhigh",
+  "theme": "dark-ansi",
   "tui": "fullscreen",
   "skipAutoPermissionPrompt": true,
   "statusLine": {

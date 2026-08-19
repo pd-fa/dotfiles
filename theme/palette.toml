@@ -12,18 +12,18 @@ schemaVersion = 1
 name = "pinknight"
 
 [slots]
-# Surfaces — plum-tinted, darkest first
-bg            = "#1c1420"
-bg_dark       = "#150e18"
-bg_highlight  = "#2a1c2b"
-bg_selection  = "#412a3d"
-bar           = "#4d1f3d"
-panel         = "#6b2a54"
+# Surfaces — dark violet, darkest first
+bg            = "#16111f"
+bg_dark       = "#100c17"
+bg_highlight  = "#221a33"
+bg_selection  = "#2f2348"
+bar           = "#1e1730"
+panel         = "#2b2145"
 
 # Text
 fg            = "#ffd6ec"
 fg_dim        = "#c99ab4"
-muted         = "#8a6b7d"
+muted         = "#8a7a9e"
 ink           = "#1a0f18"
 
 # Chrome accents — the pink identity

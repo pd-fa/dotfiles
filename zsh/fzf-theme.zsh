@@ -2,15 +2,15 @@
 # Sourced from .zshrc once FZF_DEFAULT_OPTS has been assembled.
 
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
-  --color=bg+:#412a3d \
-  --color=bg:#150e18 \
+  --color=bg+:#2f2348 \
+  --color=bg:#100c17 \
   --color=border:#c93d80 \
   --color=fg:#ffd6ec \
-  --color=gutter:#150e18 \
+  --color=gutter:#100c17 \
   --color=header:#ff9e64 \
   --color=hl+:#ff7ab8 \
   --color=hl:#ff7ab8 \
-  --color=info:#8a6b7d \
+  --color=info:#8a7a9e \
   --color=marker:#ff4fa3 \
   --color=pointer:#ff4fa3 \
   --color=prompt:#ff4fa3 \

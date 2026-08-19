@@ -1,0 +1,30 @@
+/* Generated from theme/palette.toml by theme/sync-theme.py — do not edit.
+ *
+ * Firefox's own pages only. Real websites are left alone deliberately: a global
+ * background override breaks any site that sets colour on one layer and not the
+ * other, and the failure looks like a broken site rather than a broken config.
+ */
+
+@-moz-document url-prefix("about:blank"),
+               url-prefix("about:newtab"),
+               url-prefix("about:home"),
+               url-prefix("about:privatebrowsing") {
+  :root,
+  body {
+    background-color: {{bg}} !important;
+    color: {{fg}} !important;
+  }
+}
+
+@-moz-document url-prefix("about:") {
+  :root {
+    --in-content-page-background: {{bg}} !important;
+    --in-content-page-color: {{fg}} !important;
+    --in-content-box-background: {{panel}} !important;
+    --in-content-box-border-color: {{bg_selection}} !important;
+    --in-content-accent-color: {{accent}} !important;
+    --in-content-link-color: {{accent_bright}} !important;
+    --in-content-button-background: {{bg_highlight}} !important;
+    --in-content-text-color: {{fg}} !important;
+  }
+}

@@ -25,7 +25,7 @@ IFS=$'\t' read -r model ctx five five_in seven seven_in <<<"$(
 # a session; each window can be absent independently. sl_metric drops a segment
 # entirely rather than rendering a misleading 0%.
 sl_join \
-  "${SL_CYAN}${SL_BOLD}${model:-claude}${SL_RESET}" \
+  "${SL_ACCENT}${SL_BOLD}${model:-claude}${SL_RESET}" \
   "$(sl_metric ctx "${ctx:--}" bar)" \
   "$(sl_metric ses "${five:--}"  '' "${five_in:--}")" \
   "$(sl_metric wk  "${seven:--}" '' "${seven_in:--}")"

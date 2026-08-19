@@ -106,6 +106,41 @@ else
 	warn "brew bundle failed — re-run after resolving; see 'brew bundle check --verbose'"
 fi
 
+step "Wiring Firefox"
+# Firefox profile directories carry a random prefix, so unlike every other
+# config here the destination cannot be declared — it has to be discovered.
+# sync-theme.py renders to a fixed path in the repo and this step owns the one
+# variable hop, which keeps the renderer unaware of the profile layout.
+ff_profile=$(find "$HOME/Library/Application Support/Firefox/Profiles" \
+	-maxdepth 1 -type d -name '*.default-release' 2>/dev/null | head -1)
+if [ ! -d /Applications/Firefox.app ]; then
+	warn "Firefox not installed (brew bundle incomplete) — skipping profile wiring"
+elif [ -z "$ff_profile" ]; then
+	warn "no Firefox profile yet — launch Firefox once to create one, then re-run"
+elif [ -d "$ff_profile/chrome" ] && [ ! -L "$ff_profile/chrome" ]; then
+	# Never deleted: ln -sfn onto a real directory silently nests the link
+	# inside it, and the contents are the user's, not this repo's.
+	warn "$ff_profile/chrome is a real directory — move it aside, then re-run"
+else
+	ln -sfn "$CONFIG/firefox/user.js" "$ff_profile/user.js"
+	ln -sfn "$CONFIG/firefox/chrome" "$ff_profile/chrome"
+	skip "user.js + chrome/ -> ${ff_profile##*/}"
+fi
+
+step "Installing Firefox policies"
+# Auto-installs Sidebery and Tridactyl on first launch. This lives inside the
+# app bundle, which is the only path Firefox reads on macOS — so a cask upgrade
+# replaces the bundle and drops it. Re-running restores it; the telemetry prefs
+# in user.js are what hold the line in between.
+ff_dist="/Applications/Firefox.app/Contents/Resources/distribution"
+if [ ! -d /Applications/Firefox.app ]; then
+	skip "Firefox not installed — skipping policies"
+elif mkdir -p "$ff_dist" && cp "$CONFIG/firefox/policies.json" "$ff_dist/policies.json"; then
+	skip "Sidebery + Tridactyl auto-install, telemetry off"
+else
+	warn "could not write policies.json into Firefox.app — add-ons need installing by hand"
+fi
+
 step "Starting the podman machine"
 # The Linux VM that actually runs containers is machine-local state, so brew
 # cannot create it. krunkit is the hypervisor binary for podman's default

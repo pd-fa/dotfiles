@@ -58,6 +58,10 @@ cask "1password-cli"
 cask "claude-code"
 # Brings the power of Copilot coding agent directly to your terminal
 cask "copilot-cli"
+# The one browser whose chrome reads a stylesheet off disk, so it themes from
+# theme/palette.toml like every other config here. Chrome and Safari expose no
+# equivalent; see docs/BROWSER.md.
+cask "firefox"
 cask "font-zed-mono-nerd-font"
 # Google Cloud CLI — gcloud, gsutil, bq. Cask is named gcloud-cli; the old
 # google-cloud-sdk name is an alias. Required by the Phase 4 cloud runbook.

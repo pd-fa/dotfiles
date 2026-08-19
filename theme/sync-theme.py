@@ -26,7 +26,7 @@ TEMPLATES = ROOT / "templates"
 UPSTREAM = ROOT / "upstream"
 
 HEX = re.compile(r"#[0-9a-fA-F]{6}\b")
-PLACEHOLDER = re.compile(r"\{\{\s*(\w+)\s*\}\}")
+PLACEHOLDER = re.compile(r"\{\{\s*(\w+)(?::(\w+))?\s*\}\}")
 
 
 def luminance(hex_colour):
@@ -79,7 +79,20 @@ def render_template(text, slots, origin):
     missing = {m.group(1) for m in PLACEHOLDER.finditer(text)} - slots.keys()
     if missing:
         sys.exit(f"{origin}: unknown slots {sorted(missing)}")
-    return PLACEHOLDER.sub(lambda m: slots[m.group(1)], text)
+
+    def substitute(match):
+        slot, fmt = match.group(1), match.group(2)
+        value = slots[slot]
+        if fmt is None:
+            return value
+        if fmt == "rgb":
+            # ANSI truecolor wants decimal triples; the 256-colour cube cannot
+            # hit an arbitrary palette exactly, so escapes are built from these.
+            h = value.lstrip("#")
+            return ";".join(str(int(h[i : i + 2], 16)) for i in (0, 2, 4))
+        sys.exit(f"{origin}: unknown format {fmt!r} on slot {slot!r}")
+
+    return PLACEHOLDER.sub(substitute, text)
 
 
 def render_upstream(text, source, unmapped):

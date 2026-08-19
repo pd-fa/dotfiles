@@ -1,7 +1,7 @@
 # dotfiles
 
-Work machine config. macOS (Apple Silicon), zsh, Ghostty, Neovim.
-Everything terminal-facing is themed **Tokyo Night**.
+Work machine config. macOS (Apple Silicon), zsh, Ghostty, Neovim, Firefox.
+Everything is themed from one palette — the terminal stack and the browser both.
 
 ---
 
@@ -105,6 +105,21 @@ exec zsh -l
 - `nvim` — LazyVim installs plugins, then `:Mason` for LSPs (slowest step, start it early)
 - `tmux` — tpm self-bootstraps and installs plugins on first run
 - `zsh/fzf-tab/` is an upstream clone, gitignored, cloned by `.zshrc` on first run
+- **Firefox** — launch once so the profile exists, then **re-run the bootstrap** to
+  symlink `user.js` and `chrome/` into it. Sidebery and Tridactyl install themselves
+  on that first launch via `firefox/policies.json`.
+- **Tridactyl** — `:installnative`, then `:source`. Until the native messenger is
+  installed Tridactyl cannot read from disk, so `tridactylrc` is ignored and
+  `colourscheme pinknight` fails. This is the usual reason it looks like nothing happened.
+- **Sidebery** — import `firefox/sidebery-settings.json` (settings > Help > Import), and
+  paste `firefox/sidebery/pinknight.css` into settings > Styles editor > Sidebar.
+
+> **Gotcha:** the Firefox profile directory carries a random prefix, so it is the one
+> destination in this repo that cannot be declared — the bootstrap discovers
+> `*.default-release` instead. A machine that has never launched Firefox has no profile
+> to link into, which is why the browser needs the bootstrap run twice on a rebuild.
+
+See `docs/BROWSER.md` for why Firefox replaced Arc.
 
 **Sign into 1Password CLI (`op signin`) before the bootstrap** if you want atuin history
 restored automatically — the script skips that step when `op` isn't authenticated, and
@@ -140,6 +155,8 @@ gcloud container clusters get-credentials the-fa-sandbox-helix-obs-infra-cluster
 | `mise/` | Runtime versions |
 | `bat/`, `btop/`, `yazi/`, `k9s/`, `lazygit/` | Tool configs + themes |
 | `theme/` | Canonical palette + renderer for every themed config |
+| `firefox/` | Prefs, policies and chrome CSS — symlinked into the profile by the bootstrap |
+| `tridactyl/` | Keyboard driving for Firefox — read from `~/.config` natively, no symlink |
 
 ## Conventions
 
@@ -205,7 +222,7 @@ gets atlassian/github/playwright from its plugin marketplace, so those are Copil
 
 ## Theming
 
-One palette, eleven configs, no hand-edited hex.
+One palette, 18 configs, no hand-edited hex — browser chrome included.
 
 | Path | What |
 | --- | --- |
@@ -222,6 +239,10 @@ python3 ~/.config/theme/sync-theme.py --check   # fail if rendered output is sta
 The path under `templates/` or `upstream/` **is** the destination relative to
 `~/.config`, so adding a file needs no registration in the script.
 
+Firefox is the one exception, and only at the last hop: its profile directory carries
+a random prefix, so the renderer writes to `firefox/` in this repo and `bootstrap.sh`
+symlinks that into the profile it discovers. The renderer stays unaware of it.
+
 - **Slots are roles, not colours.** `accent`, `bg`, `err` — never `pink`. Changing a
   slot's value rethemes everything; renaming its key means editing every consumer again.
 - **Semantic slots stay legible.** btop's temperature gradient, lazygit's diffs and
@@ -234,7 +255,9 @@ The path under `templates/` or `upstream/` **is** the destination relative to
 - Rendered files are committed, so a fresh clone is themed before bootstrap runs.
   **Edit the template or the palette, never the rendered file.**
 
-`bat` caches its themes — run `bat cache --build` after a palette change.
+`bat` caches its themes — run `bat cache --build` after a palette change. Tridactyl
+copies a theme into extension storage when it loads, so a palette change needs
+`:source` in Firefox before the command line repaints.
 
 ## Not managed here
 

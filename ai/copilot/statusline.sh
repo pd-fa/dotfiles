@@ -66,7 +66,7 @@ IFS=$'\t' read -r model ctx ses quota quota_in <<<"$(
 )" || true
 
 sl_join \
-  "${SL_CYAN}${SL_BOLD}${model:-copilot}${SL_RESET}" \
+  "${SL_ACCENT}${SL_BOLD}${model:-copilot}${SL_RESET}" \
   "$(sl_metric ctx "${ctx:--}" bar)" \
   "$(sl_metric ses "${ses:--}")" \
   "$(sl_metric quota "${quota:--}" '' "${quota_in:--}")"

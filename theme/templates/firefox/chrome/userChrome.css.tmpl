@@ -1,0 +1,95 @@
+/* Generated from theme/palette.toml by theme/sync-theme.py — do not edit.
+ *
+ * Requires toolkit.legacyUserProfileCustomizations.stylesheets, set in
+ * firefox/user.js. Without that pref this file is never read at all.
+ *
+ * Firefox chrome selectors are internal, not API. When a Firefox update breaks
+ * the layout, this file is the first suspect — check the Browser Toolbox
+ * rather than assuming the palette drifted.
+ */
+
+:root {
+  --lwt-accent-color: {{bg_dark}} !important;
+  --lwt-text-color: {{fg}} !important;
+  --toolbar-bgcolor: {{bar}} !important;
+  --toolbar-color: {{fg}} !important;
+  --toolbar-field-background-color: {{bg_highlight}} !important;
+  --toolbar-field-color: {{fg}} !important;
+  --toolbar-field-focus-background-color: {{bg}} !important;
+  --toolbar-field-focus-border-color: {{accent}} !important;
+  --toolbar-field-border-color: transparent !important;
+  --arrowpanel-background: {{panel}} !important;
+  --arrowpanel-color: {{fg}} !important;
+  --arrowpanel-border-color: {{bg_selection}} !important;
+  --focus-outline-color: {{accent}} !important;
+  --urlbar-box-bgcolor: {{bg_highlight}} !important;
+  --urlbar-box-text-color: {{fg_dim}} !important;
+  --sidebar-background-color: {{bg_dark}} !important;
+  --sidebar-text-color: {{fg}} !important;
+  --sidebar-border-color: {{bg_selection}} !important;
+}
+
+/* Sidebery owns tab display, so the native strip is dead weight. `visibility:
+ * collapse` and not `display: none` — display:none detaches the strip from the
+ * focus ring and takes Ctrl-Tab and the tab-close shortcuts with it. */
+#TabsToolbar {
+  visibility: collapse !important;
+}
+
+/* With the strip gone macOS draws the traffic lights over the toolbar. The root
+ * attribute was renamed tabsintitlebar -> customtitlebar, so both are matched:
+ * a stale selector is inert, a missing one costs 78px of overlapped chrome. */
+:root[tabsintitlebar] #nav-bar,
+:root[customtitlebar] #nav-bar {
+  padding-inline-start: 78px !important;
+}
+
+/* Fullscreen hides the traffic lights, so the reservation would be dead space. */
+:root[inFullscreen] #nav-bar {
+  padding-inline-start: 0 !important;
+}
+
+/* Sidebery draws its own header, search field and panel switcher. */
+#sidebar-header {
+  display: none !important;
+}
+
+#sidebar-box {
+  background-color: {{bg_dark}} !important;
+}
+
+#sidebar-splitter {
+  border: 0 !important;
+  min-width: 1px !important;
+  background-color: {{bg_selection}} !important;
+}
+
+#navigator-toolbox {
+  border-bottom: 1px solid {{bg_selection}} !important;
+}
+
+#urlbar[focused="true"] > #urlbar-background {
+  box-shadow: 0 0 0 1px {{accent}} !important;
+}
+
+/* The urlbar results panel, which does not inherit --arrowpanel-*. */
+.urlbarView {
+  background-color: {{panel}} !important;
+  color: {{fg}} !important;
+}
+
+.urlbarView-row[selected],
+.urlbarView-row:hover {
+  background-color: {{bg_selection}} !important;
+}
+
+.urlbarView-title strong,
+.urlbarView-url {
+  color: {{accent_bright}} !important;
+}
+
+findbar {
+  background-color: {{bar}} !important;
+  color: {{fg}} !important;
+  border-top: 1px solid {{bg_selection}} !important;
+}

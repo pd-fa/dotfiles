@@ -2,10 +2,8 @@
 # Shared presentation for agent CLI status lines. Sourced, never executed.
 # Callers supply values; this file owns colour, meters and joining only.
 
-# shellcheck disable=SC2034  # colours are consumed by the sourcing adapters
-SL_DIM=$'\033[2m'; SL_RESET=$'\033[0m'; SL_BOLD=$'\033[1m'
-SL_CYAN=$'\033[38;5;44m'; SL_GREEN=$'\033[38;5;78m'
-SL_AMBER=$'\033[38;5;179m'; SL_RED=$'\033[38;5;203m'
+# shellcheck source=/dev/null  # rendered from theme/palette.toml at sync time
+source "${HOME}/.config/ai/lib/statusline-colors.sh"
 
 # Percentages arrive as floats (23.5); bash arithmetic needs the integer part.
 # Empty output signals "absent", which callers use to drop the whole segment.
