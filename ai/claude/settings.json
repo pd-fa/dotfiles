@@ -43,5 +43,10 @@
   },
   "effortLevel": "xhigh",
   "tui": "fullscreen",
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "statusLine": {
+    "type": "command",
+    "command": "~/.config/ai/claude/statusline.sh",
+    "padding": 0
+  }
 }
