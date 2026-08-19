@@ -40,13 +40,17 @@ inputTaps.scroll = hs.eventtap.new({ types.scrollWheel }, function(event)
 	if event:getProperty(props.scrollWheelEventIsContinuous) ~= 0 then
 		return false
 	end
-	for _, axis in ipairs({
-		props.scrollWheelEventDeltaAxis1,
-		props.scrollWheelEventFixedPtDeltaAxis1,
-		props.scrollWheelEventPointDeltaAxis1,
-	}) do
-		event:setProperty(axis, -event:getProperty(axis))
-	end
+	-- Read all three before writing any. They are derived from one another, so
+	-- setting the line delta makes macOS recompute the fixed-point and pixel
+	-- deltas from the already-inverted value -- read-modify-write in a loop then
+	-- inverts those a second time and cancels itself out.
+	local line = event:getProperty(props.scrollWheelEventDeltaAxis1)
+	local fixed = event:getProperty(props.scrollWheelEventFixedPtDeltaAxis1)
+	local pixels = event:getProperty(props.scrollWheelEventPointDeltaAxis1)
+
+	event:setProperty(props.scrollWheelEventDeltaAxis1, -line)
+	event:setProperty(props.scrollWheelEventFixedPtDeltaAxis1, -fixed)
+	event:setProperty(props.scrollWheelEventPointDeltaAxis1, -pixels)
 	return false
 end)
 
