@@ -73,9 +73,10 @@ Idempotent, so re-run it any time — the `bootstrap` alias runs it and reloads 
 one go, which is the normal way to pick up a change to this repo. It installs the Brewfile
 (CLI tools, casks and the
 **Nerd Font** — without which every glyph renders as tofu), links shell and agent config
-into `$HOME`, wires the git hooks, installs runtimes via mise, builds the bat theme cache,
-brings up the podman machine, renders the MCP configs, and restores atuin history from
-1Password if it isn't already there.
+into `$HOME`, wires the git hooks, applies the macOS defaults the input stack depends on,
+symlinks the Firefox profile config and installs its add-on policies, installs runtimes via
+mise, builds the bat theme cache, brings up the podman machine, renders the MCP configs, and
+restores atuin history from 1Password if it isn't already there.
 
 Phase 1 is deliberately not scripted — MDM, the 1Password GUI and Xcode CLT are all
 interactive.
@@ -130,7 +131,9 @@ See `docs/BROWSER.md` for why Firefox replaced Arc.
 > entry that prompts for a sudo password — an otherwise unattended `bootstrap.sh`
 > re-run will block there.
 
-See `docs/MACOS_INPUT.md` for why these replaced Mos and BetterTouchTool.
+See `docs/MACOS_INPUT.md` for why these replaced Mos and BetterTouchTool, and
+`KEYBINDINGS.md` for every binding in one place — AeroSpace's are the ones you will not
+guess, since the workspace row sits on `cmd-alt` to keep Option+3 free for `#`.
 
 **Sign into 1Password CLI (`op signin`) before the bootstrap** if you want atuin history
 restored automatically — the script skips that step when `op` isn't authenticated, and
@@ -170,6 +173,8 @@ gcloud container clusters get-credentials the-fa-sandbox-helix-obs-infra-cluster
 | `tridactyl/` | Keyboard driving for Firefox — read from `~/.config` natively, no symlink |
 | `karabiner/`, `aerospace/` | Mouse rules + tiling WM — read from `~/.config` natively, no symlink |
 | `macos/` | System `defaults` the input config depends on |
+| `docs/` | Decision records — why the browser and input stack are what they are |
+| `KEYBINDINGS.md` | Cheatsheet for every tool's bindings — nvim, tmux, AeroSpace, shell |
 
 ## Conventions
 
