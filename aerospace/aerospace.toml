@@ -30,6 +30,10 @@ alt-comma = 'layout accordion horizontal vertical'
 # it around a window explicitly asked to fill the screen defeats the request.
 alt-f = 'fullscreen --no-outer-gaps'
 
+# System Settings, 1Password's mini window and video calls are sized by their
+# own authors and stretch badly into a tile. Toggles back into the tree.
+alt-shift-space = 'layout floating tiling'
+
 alt-h = 'focus left'
 alt-j = 'focus down'
 alt-k = 'focus up'
