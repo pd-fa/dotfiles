@@ -5,5 +5,5 @@
 
 # shellcheck disable=SC2034  # consumed by statusline-render.sh and its adapters
 SL_DIM=$'\033[2m'; SL_RESET=$'\033[0m'; SL_BOLD=$'\033[1m'
-SL_ACCENT=$'\033[38;2;255;79;163m'; SL_GREEN=$'\033[38;2;158;206;106m'
-SL_AMBER=$'\033[38;2;224;175;104m'; SL_RED=$'\033[38;2;247;118;142m'
+SL_ACCENT=$'\033[38;2;255;79;163m'; SL_GREEN=$'\033[38;2;166;221;112m'
+SL_AMBER=$'\033[38;2;232;189;118m'; SL_RED=$'\033[38;2;255;143;163m'

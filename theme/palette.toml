@@ -12,64 +12,92 @@ schemaVersion = 1
 name = "pinknight"
 
 [slots]
-# Surfaces — dark violet, darkest first
-bg            = "#16111f"
-bg_dark       = "#100c17"
-bg_highlight  = "#221a33"
-bg_selection  = "#2f2348"
-bar           = "#1e1730"
-panel         = "#2b2145"
+# Surfaces — deep purple, darkest first
+bg            = "#141021"
+bg_dark       = "#0e0b17"
+bg_highlight  = "#1f1930"
+bg_selection  = "#2c2246"
+bar           = "#1a1530"
+panel         = "#272044"
 
 # Text
-fg            = "#ffd6ec"
-fg_dim        = "#c99ab4"
-muted         = "#8a7a9e"
-ink           = "#1a0f18"
+fg            = "#e9e2f8"
+fg_dim        = "#c3b3e8"
+muted         = "#9c8cc4"
+ink           = "#140f1c"
 
 # Chrome accents — the pink identity
 accent        = "#ff4fa3"
 accent_bright = "#ff7ab8"
 accent_deep   = "#c93d80"
-purple        = "#bb9af7"
-purple_deep   = "#9d7cd8"
+purple        = "#c9aefc"
+purple_deep   = "#ab8df3"
 
 # Semantic — hue carries meaning, retune with care
-ok            = "#9ece6a"
-warn          = "#e0af68"
-err           = "#f7768e"
-err_bright    = "#db4b4b"
-info          = "#7dcfff"
-info_deep     = "#27a1b9"
-info_light    = "#89ddff"
-teal          = "#73daca"
-special       = "#ff9e64"
+ok            = "#a6dd70"
+warn          = "#e8bd76"
+err           = "#ff8fa3"
+err_bright    = "#ef5f5f"
+info          = "#8ce6ff"
+info_deep     = "#4bb8d9"
+info_light    = "#b3f0ff"
+teal          = "#85ecd6"
+special       = "#ffab77"
 
 # Pairs asserted on every render. Rendering aborts below the floor, so a
 # retune can never silently ship unreadable chrome.
 [[contrast]]
 fg = "fg"
+bg = "bg"
+min = 12.0
+[[contrast]]
+fg = "fg_dim"
+bg = "bg"
+min = 9.0
+[[contrast]]
+fg = "muted"
+bg = "bg"
+min = 5.5
+[[contrast]]
+fg = "info"
+bg = "bg"
+min = 11.0
+[[contrast]]
+fg = "accent"
+bg = "bg"
+min = 5.5
+[[contrast]]
+fg = "purple"
+bg = "bg"
+min = 8.0
+[[contrast]]
+fg = "fg"
 bg = "bar"
-min = 4.5
+min = 11.0
 [[contrast]]
 fg = "fg_dim"
 bg = "bar"
-min = 4.5
+min = 7.0
+[[contrast]]
+fg = "fg"
+bg = "panel"
+min = 9.0
 [[contrast]]
 fg = "ink"
 bg = "accent"
 min = 4.5
 [[contrast]]
-fg = "fg"
-bg = "panel"
-min = 4.5
-[[contrast]]
-fg = "fg"
+fg = "ok"
 bg = "bg"
-min = 7.0
+min = 6.0
 [[contrast]]
-fg = "muted"
+fg = "warn"
 bg = "bg"
-min = 3.0
+min = 6.0
+[[contrast]]
+fg = "err"
+bg = "bg"
+min = 6.0
 
 # Upstream Tokyo Night hex -> slot. Vendored theme files are rewritten through
 # this map, so adopting a new upstream theme means extending this table rather

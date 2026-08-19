@@ -9,24 +9,24 @@
  */
 
 :root {
-  --lwt-accent-color: #100c17 !important;
-  --lwt-text-color: #ffd6ec !important;
-  --toolbar-bgcolor: #1e1730 !important;
-  --toolbar-color: #ffd6ec !important;
-  --toolbar-field-background-color: #221a33 !important;
-  --toolbar-field-color: #ffd6ec !important;
-  --toolbar-field-focus-background-color: #16111f !important;
+  --lwt-accent-color: #0e0b17 !important;
+  --lwt-text-color: #e9e2f8 !important;
+  --toolbar-bgcolor: #1a1530 !important;
+  --toolbar-color: #e9e2f8 !important;
+  --toolbar-field-background-color: #1f1930 !important;
+  --toolbar-field-color: #e9e2f8 !important;
+  --toolbar-field-focus-background-color: #141021 !important;
   --toolbar-field-focus-border-color: #ff4fa3 !important;
   --toolbar-field-border-color: transparent !important;
-  --arrowpanel-background: #2b2145 !important;
-  --arrowpanel-color: #ffd6ec !important;
-  --arrowpanel-border-color: #2f2348 !important;
+  --arrowpanel-background: #272044 !important;
+  --arrowpanel-color: #e9e2f8 !important;
+  --arrowpanel-border-color: #2c2246 !important;
   --focus-outline-color: #ff4fa3 !important;
-  --urlbar-box-bgcolor: #221a33 !important;
-  --urlbar-box-text-color: #c99ab4 !important;
-  --sidebar-background-color: #100c17 !important;
-  --sidebar-text-color: #ffd6ec !important;
-  --sidebar-border-color: #2f2348 !important;
+  --urlbar-box-bgcolor: #1f1930 !important;
+  --urlbar-box-text-color: #c3b3e8 !important;
+  --sidebar-background-color: #0e0b17 !important;
+  --sidebar-text-color: #e9e2f8 !important;
+  --sidebar-border-color: #2c2246 !important;
 }
 
 /* Sidebery owns tab display, so the native strip is dead weight. `visibility:
@@ -55,17 +55,17 @@
 }
 
 #sidebar-box {
-  background-color: #100c17 !important;
+  background-color: #0e0b17 !important;
 }
 
 #sidebar-splitter {
   border: 0 !important;
   min-width: 1px !important;
-  background-color: #2f2348 !important;
+  background-color: #2c2246 !important;
 }
 
 #navigator-toolbox {
-  border-bottom: 1px solid #2f2348 !important;
+  border-bottom: 1px solid #2c2246 !important;
 }
 
 #urlbar[focused="true"] > #urlbar-background {
@@ -74,13 +74,13 @@
 
 /* The urlbar results panel, which does not inherit --arrowpanel-*. */
 .urlbarView {
-  background-color: #2b2145 !important;
-  color: #ffd6ec !important;
+  background-color: #272044 !important;
+  color: #e9e2f8 !important;
 }
 
 .urlbarView-row[selected],
 .urlbarView-row:hover {
-  background-color: #2f2348 !important;
+  background-color: #2c2246 !important;
 }
 
 .urlbarView-title strong,
@@ -89,7 +89,7 @@
 }
 
 findbar {
-  background-color: #1e1730 !important;
-  color: #ffd6ec !important;
-  border-top: 1px solid #2f2348 !important;
+  background-color: #1a1530 !important;
+  color: #e9e2f8 !important;
+  border-top: 1px solid #2c2246 !important;
 }

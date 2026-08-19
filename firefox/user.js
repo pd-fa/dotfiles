@@ -20,7 +20,7 @@ user_pref("sidebar.verticalTabs", false);
 
 // Paints the pre-render window and about:blank in the palette background.
 // Without it every new tab flashes white before content paints.
-user_pref("browser.display.background_color", "#16111f");
+user_pref("browser.display.background_color", "#141021");
 
 user_pref("browser.uidensity", 1);
 user_pref("browser.compactmode.show", true);

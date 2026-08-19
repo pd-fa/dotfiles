@@ -45,6 +45,21 @@ return {
         c.red = "{{err}}"
         c.red1 = "{{err_bright}}"
       end,
+      -- The dashboard renders before any buffer, so it sets the first impression
+      -- of the theme. Pink stays on the header alone; keys and icons take cyan,
+      -- which is the highest-contrast slot in the palette and the fastest thing
+      -- to scan a list by.
+      on_highlights = function(hl, c)
+        hl.SnacksDashboardHeader = { fg = "{{accent}}" }
+        hl.SnacksDashboardIcon = { fg = "{{info}}" }
+        hl.SnacksDashboardKey = { fg = "{{info}}", bold = true }
+        hl.SnacksDashboardDesc = { fg = "{{fg}}" }
+        hl.SnacksDashboardFile = { fg = "{{fg}}" }
+        hl.SnacksDashboardDir = { fg = "{{muted}}" }
+        hl.SnacksDashboardFooter = { fg = "{{muted}}", italic = true }
+        hl.SnacksDashboardSpecial = { fg = "{{purple}}" }
+        hl.SnacksDashboardTitle = { fg = "{{teal}}" }
+      end,
     },
   },
   { "LazyVim/LazyVim", opts = { colorscheme = "tokyonight" } },

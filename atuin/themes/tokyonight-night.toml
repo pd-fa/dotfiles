@@ -2,11 +2,11 @@
 name = "TokyoNight"
 
 [colors]
-AlertInfo = "#7dcfff"   # Light Blue
-AlertWarn = "#e0af68"   # Orange
-AlertError = "#db4b4b"  # Red
-Annotation = "#ffd6ec"  # Light Periwinkle
-Base = "#16111f"        # Dark Blue
-Guidance = "#ff9e64"    # Coral
-Important = "#bb9af7"   # Light Purple
+AlertInfo = "#8ce6ff"   # Light Blue
+AlertWarn = "#e8bd76"   # Orange
+AlertError = "#ef5f5f"  # Red
+Annotation = "#e9e2f8"  # Light Periwinkle
+Base = "#141021"        # Dark Blue
+Guidance = "#ffab77"    # Coral
+Important = "#c9aefc"   # Light Purple
 Title = "#ff4fa3"       # Blue
