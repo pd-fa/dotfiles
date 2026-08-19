@@ -237,8 +237,11 @@ Writes `~/.claude.json` (merged in place — it is a mutable state file) and
 "env": { "SONARQUBE_TOKEN": "op://Work/SonarCloud MCP/credential" }
 ```
 
-**Use `podman`, never `docker`.** `docker` is a shell alias here — MCP servers spawn
-without a shell, so a `docker` command silently fails to start.
+**`docker` is a real binary, not an alias.** It used to be `alias docker=podman`, which
+broke MCP servers — they spawn without a shell, so the alias did not exist and the
+command silently failed. The `docker` formula plus `DOCKER_HOST` pointing at podman's
+socket fixes that: every caller resolves it, shell or not. Podman is still what runs
+the containers.
 
 `targets` in `mcp-servers.json` selects which tool gets which server. Claude Code already
 gets atlassian/github/playwright from its plugin marketplace, so those are Copilot-only.

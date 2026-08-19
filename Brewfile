@@ -15,6 +15,16 @@ brew "betterleaks"
 brew "btop"
 # Load/unload environment variables based on $PWD
 brew "direnv"
+# Docker CLI only — not Desktop. Exists alongside podman because DOCKER_HOST
+# (zsh/exports.zsh) points it at podman's socket, so `docker` drives the podman
+# machine. This replaced `alias docker=podman`: MCP servers spawn without a
+# shell, so the alias did not exist for them and the command silently failed.
+# A real binary on PATH resolves for every caller, shell or not.
+brew "docker"
+# Compose v2 as a docker plugin. `docker compose` only finds it once
+# ~/.docker/config.json lists /opt/homebrew/lib/docker/cli-plugins in
+# cliPluginsExtraDirs — that file holds registry auth, so it is not tracked here.
+brew "docker-compose"
 # Modern, maintained replacement for ls
 brew "eza"
 # Enable transparent encryption/decryption of files in a git repo
