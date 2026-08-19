@@ -282,8 +282,8 @@ System-wide. `alt` is Option. Config: `aerospace/aerospace.toml`.
 - `alt+shift+space` - Float / re-tile the focused window
 
 ### Workspaces (1-5)
-- `alt+1..5` - Focus workspace
-- `alt+shift+1..5` - Move window to workspace
+- `cmd+alt+1..5` - Focus workspace
+- `cmd+alt+shift+1..5` - Move window to workspace
 - `alt+[` / `alt+]` - Previous / next workspace (wraps)
 - `alt+tab` - Back and forth
 

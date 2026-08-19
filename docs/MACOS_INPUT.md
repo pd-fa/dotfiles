@@ -73,6 +73,12 @@ ioreg -r -c IOHIDDevice -d 1 | grep -E '"(Product|VendorID|ProductID)"'
 - **Keep `persistent-workspaces` short.** `workspace next|prev` walks every workspace on the
   monitor in alphabetical order including empty ones, and the thumb buttons drive exactly
   that command. The upstream default of 31 workspaces makes the mouse binding unusable.
+- **Workspaces bind to `cmd-alt`, not plain `alt`.** This is a British layout, where `#` is
+  Option+3 and no dedicated key exists. A global `alt-3` hotkey consumes the keystroke before
+  text input sees it, so binding the workspace row to plain Option costs the most-used
+  punctuation in shell, YAML, Python and Markdown. Only `alt-3` actually collides, but both
+  workspace families moved so the keymap stays predictable. Everything still on plain Option
+  (`alt-h/j/k/l`, `alt-f`, `alt-[`/`]`) costs only dead keys and typographic characters.
 
 ## Manual steps
 
