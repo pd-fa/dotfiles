@@ -2,6 +2,7 @@ tap "anomalyco/tap"
 tap "fluxcd/tap"
 tap "hashicorp/tap"
 tap "libkrun/krun", trusted: { formulae: ["gvproxy", "libkrun", "libkrunfw", "virglrenderer"] }
+tap "nikitabobko/tap"
 # Improved shell history for zsh, bash, fish and nushell
 # No restart_service: the formula's service runs `atuin daemon start`, but the
 # daemon is opt-in and atuin/config.toml does not set [daemon] enabled = true,
@@ -54,6 +55,11 @@ brew "anomalyco/tap/opencode", trusted: true
 brew "libkrun/krun/krunkit", trusted: true
 # Command-line interface for 1Password
 cask "1password-cli"
+# i3-like tiling window manager. Reads its config from ~/.config/aerospace, so
+# unlike the shell config it needs no bootstrap symlink. trusted: is required —
+# Homebrew 6 refuses casks from third-party taps without it, and `brew trust`
+# records that in ~/.homebrew/trust.json, which is machine-local and untracked.
+cask "nikitabobko/tap/aerospace", trusted: true
 # Terminal-based AI coding assistant
 cask "claude-code"
 # Brings the power of Copilot coding agent directly to your terminal
@@ -68,6 +74,13 @@ cask "font-zed-mono-nerd-font"
 cask "gcloud-cli"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
+# Per-device mouse tuning macOS cannot do itself: there is one global
+# swipescrolldirection, so inverting the mouse wheel while the trackpad stays
+# natural needs an HID-layer rule. Also carries the mouse4/mouse5 bindings.
+# Ships a .pkg, so this is the one Brewfile entry that prompts for a sudo
+# password — an unattended `bootstrap.sh` re-run will block here.
+# Needs the DriverKit extension approved in System Settings after install.
+cask "karabiner-elements"
 # Native GUI tool for relational databases
 cask "tableplus"
 go "golang.org/x/tools/cmd/callgraph"

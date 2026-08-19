@@ -268,6 +268,30 @@ Quick reference for all terminal tools and their keybindings.
 
 ---
 
+## AeroSpace (Window Manager)
+
+System-wide. `alt` is Option. Config: `aerospace/aerospace.toml`.
+
+### Focus / Move
+- `alt+h/j/k/l` - Focus window left/down/up/right
+- `alt+shift+h/j/k/l` - Move window left/down/up/right
+- `alt+-` / `alt+=` - Shrink / grow window
+- `alt+/` - Tiles layout (toggle horizontal/vertical)
+- `alt+,` - Accordion layout
+
+### Workspaces (1-5)
+- `alt+1..5` - Focus workspace
+- `alt+shift+1..5` - Move window to workspace
+- `alt+[` / `alt+]` - Previous / next workspace (wraps)
+- `alt+tab` - Back and forth
+
+### Mouse (Logitech G502, via Karabiner)
+- `mouse4` - Previous workspace
+- `mouse5` - Next workspace
+- Scroll wheel is inverted on this mouse only; the trackpad stays natural
+
+---
+
 ## Global Shell Shortcuts
 
 ### FZF Triggers
