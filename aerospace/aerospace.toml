@@ -62,8 +62,8 @@ cmd-alt-shift-3 = 'move-node-to-workspace 3'
 cmd-alt-shift-4 = 'move-node-to-workspace 4'
 cmd-alt-shift-5 = 'move-node-to-workspace 5'
 
-# Keyboard equivalents of the mouse thumb buttons, which Karabiner maps to the
-# same two commands.
+# Keyboard equivalents of the mouse thumb buttons, which Hammerspoon maps to
+# the same two commands.
 alt-leftSquareBracket = 'workspace --wrap-around prev'
 alt-rightSquareBracket = 'workspace --wrap-around next'
 alt-tab = 'workspace-back-and-forth'
