@@ -12,6 +12,12 @@ $character"""
 
 add_newline = true
 
+# Must sit above [palettes.tokyonight]: a bare key after a table header belongs
+# to that table, so declaring it below defines palettes.tokyonight.palette and
+# leaves the palette inactive — built-in names fall back to basic ANSI and the
+# rest emit no colour at all.
+palette = "tokyonight"
+
 [palettes.tokyonight]
 blue = "#2ac3de"
 cyan = "#27a1b9"
@@ -22,8 +28,6 @@ pink = "#ff007c"
 purple = "#bb9af7"
 red = "#f7768e"
 grey = "#545c7e"
-
-palette = "tokyonight"
 
 [directory]
 style = "bold blue"
