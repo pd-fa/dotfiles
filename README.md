@@ -88,10 +88,9 @@ interactive.
 > formulae, so the bootstrap covers it. `krunkit` is absent from homebrew-core
 > because the binary needs a `Hypervisor.framework` codesigning entitlement.
 
-Apps not in the Brewfile:
+Not a brew package, so the bootstrap cannot cover it:
 
 ```bash
-brew install --cask podman-desktop obsidian
 gcloud components install gke-gcloud-auth-plugin
 ```
 

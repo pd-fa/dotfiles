@@ -17,9 +17,9 @@ brew "btop"
 brew "direnv"
 # Docker CLI only — not Desktop. Exists alongside podman because DOCKER_HOST
 # (zsh/exports.zsh) points it at podman's socket, so `docker` drives the podman
-# machine. This replaced `alias docker=podman`: MCP servers spawn without a
-# shell, so the alias did not exist for them and the command silently failed.
-# A real binary on PATH resolves for every caller, shell or not.
+# machine. This replaced `alias docker=podman`: shell scripts and MCP servers
+# both run non-interactively, where aliases are never sourced, so the command
+# silently failed. A real binary on PATH resolves for every caller.
 brew "docker"
 # Compose v2 as a docker plugin. `docker compose` only finds it once
 # ~/.docker/config.json lists /opt/homebrew/lib/docker/cli-plugins in
@@ -84,13 +84,18 @@ cask "font-zed-mono-nerd-font"
 cask "gcloud-cli"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
-# Per-device mouse tuning macOS cannot do itself: there is one global
-# swipescrolldirection, so inverting the mouse wheel while the trackpad stays
-# natural needs an HID-layer rule. Also carries the mouse4/mouse5 bindings.
-# Ships a .pkg, so this is the one Brewfile entry that prompts for a sudo
-# password — an unattended `bootstrap.sh` re-run will block here.
-# Needs the DriverKit extension approved in System Settings after install.
-cask "karabiner-elements"
+# Mouse behaviour macOS cannot express: it has one global scroll direction
+# for every pointing device, and no way to bind the thumb buttons. Karabiner
+# is the better tool but its DriverKit extension cannot be approved under this
+# MDM — the Login Items & Extensions pane is inert. Hammerspoon needs only an
+# Accessibility grant, so it works where Karabiner cannot.
+cask "hammerspoon"
+# Markdown notes. nvim/ carries an obsidian.nvim config and a <leader>o keymap
+# family that expect the vault this opens, so the two are a pair.
+cask "obsidian"
+# Podman GUI. The CLI and the machine come from the podman formula above; this
+# is only the inspector, so it is safe to skip on a headless rebuild.
+cask "podman-desktop"
 # Native GUI tool for relational databases
 cask "tableplus"
 go "golang.org/x/tools/cmd/callgraph"
