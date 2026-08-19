@@ -11,20 +11,20 @@
                url-prefix("about:privatebrowsing") {
   :root,
   body {
-    background-color: #1c1420 !important;
+    background-color: #16111f !important;
     color: #ffd6ec !important;
   }
 }
 
 @-moz-document url-prefix("about:") {
   :root {
-    --in-content-page-background: #1c1420 !important;
+    --in-content-page-background: #16111f !important;
     --in-content-page-color: #ffd6ec !important;
-    --in-content-box-background: #6b2a54 !important;
-    --in-content-box-border-color: #412a3d !important;
+    --in-content-box-background: #2b2145 !important;
+    --in-content-box-border-color: #2f2348 !important;
     --in-content-accent-color: #ff4fa3 !important;
     --in-content-link-color: #ff7ab8 !important;
-    --in-content-button-background: #2a1c2b !important;
+    --in-content-button-background: #221a33 !important;
     --in-content-text-color: #ffd6ec !important;
   }
 }

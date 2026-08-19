@@ -12,16 +12,16 @@
  */
 
 #root.root {
-  --s-frame-bg: #150e18;
+  --s-frame-bg: #100c17;
   --s-frame-fg: #ffd6ec;
-  --s-toolbar-bg: #4d1f3d;
+  --s-toolbar-bg: #1e1730;
   --s-toolbar-fg: #c99ab4;
-  --s-toolbar-border: #412a3d;
+  --s-toolbar-border: #2f2348;
   --s-accent: #ff4fa3;
-  --s-act-el-bg: #412a3d;
+  --s-act-el-bg: #2f2348;
   --s-act-el-fg: #ffd6ec;
   --s-act-el-border: #ff4fa3;
-  --s-popup-bg: #6b2a54;
+  --s-popup-bg: #2b2145;
   --s-popup-fg: #ffd6ec;
-  --s-popup-border: #412a3d;
+  --s-popup-border: #2f2348;
 }
