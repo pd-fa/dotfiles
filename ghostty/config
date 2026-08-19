@@ -1,6 +1,6 @@
   keybind = global:cmd+shift+`=toggle_quick_terminal
 
-theme = TokyoNight Night
+theme = pinknight
 font-family = "ZedMono Nerd Font Mono"
 
 bold-is-bright = true

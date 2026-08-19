@@ -13,15 +13,15 @@ $character"""
 add_newline = true
 
 [palettes.tokyonight]
-blue = "#7dcfff"
+blue = "#2ac3de"
 cyan = "#27a1b9"
-fg = "#ffd6ec"
+fg = "#c0caf5"
 green = "#9ece6a"
 orange = "#ff9e64"
-pink = "#ff7ab8"
+pink = "#ff007c"
 purple = "#bb9af7"
 red = "#f7768e"
-grey = "#8a6b7d"
+grey = "#545c7e"
 
 palette = "tokyonight"
 

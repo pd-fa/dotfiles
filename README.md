@@ -139,6 +139,7 @@ gcloud container clusters get-credentials the-fa-sandbox-helix-obs-infra-cluster
 | `git/hooks/` | Global hooks — enabled via `core.hooksPath` |
 | `mise/` | Runtime versions |
 | `bat/`, `btop/`, `yazi/`, `k9s/`, `lazygit/` | Tool configs + themes |
+| `theme/` | Canonical palette + renderer for every themed config |
 
 ## Conventions
 
@@ -201,6 +202,39 @@ without a shell, so a `docker` command silently fails to start.
 
 `targets` in `mcp-servers.json` selects which tool gets which server. Claude Code already
 gets atlassian/github/playwright from its plugin marketplace, so those are Copilot-only.
+
+## Theming
+
+One palette, eleven configs, no hand-edited hex.
+
+| Path | What |
+| --- | --- |
+| `theme/palette.toml` | Canonical source — semantic slots, contrast floors, upstream hex map |
+| `theme/sync-theme.py` | Renders every themed config from the palette |
+| `theme/templates/` | Files this repo authors — `{{slot}}` placeholders |
+| `theme/upstream/` | Vendored theme files — hex literals rewritten through `[source]` |
+
+```bash
+python3 ~/.config/theme/sync-theme.py           # after editing palette.toml
+python3 ~/.config/theme/sync-theme.py --check   # fail if rendered output is stale
+```
+
+The path under `templates/` or `upstream/` **is** the destination relative to
+`~/.config`, so adding a file needs no registration in the script.
+
+- **Slots are roles, not colours.** `accent`, `bg`, `err` — never `pink`. Changing a
+  slot's value rethemes everything; renaming its key means editing every consumer again.
+- **Semantic slots stay legible.** btop's temperature gradient, lazygit's diffs and
+  atuin's alerts encode meaning in hue. A theme's identity belongs in chrome
+  (`bar`, `panel`, `accent`), not in `ok`/`warn`/`err`.
+- **Contrast is enforced.** `[[contrast]]` pairs are asserted on every render and the
+  run aborts below the floor, so a retune cannot ship unreadable chrome.
+- **Personal overrides.** This repo is shared, so `palette.toml` is the house theme.
+  An untracked `theme/palette.local.toml` overrides individual slots per machine.
+- Rendered files are committed, so a fresh clone is themed before bootstrap runs.
+  **Edit the template or the palette, never the rendered file.**
+
+`bat` caches its themes — run `bat cache --build` after a palette change.
 
 ## Not managed here
 

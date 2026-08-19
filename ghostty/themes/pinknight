@@ -1,0 +1,27 @@
+# Generated from theme/palette.toml by theme/sync-theme.py — do not edit.
+
+background = #1c1420
+foreground = #ffd6ec
+
+cursor-color = #ff4fa3
+cursor-text = #1a0f18
+
+selection-background = #412a3d
+selection-foreground = #ffd6ec
+
+palette = 0=#150e18
+palette = 1=#f7768e
+palette = 2=#9ece6a
+palette = 3=#e0af68
+palette = 4=#ff4fa3
+palette = 5=#bb9af7
+palette = 6=#73daca
+palette = 7=#c99ab4
+palette = 8=#8a6b7d
+palette = 9=#db4b4b
+palette = 10=#9ece6a
+palette = 11=#ff9e64
+palette = 12=#ff7ab8
+palette = 13=#9d7cd8
+palette = 14=#7dcfff
+palette = 15=#ffd6ec

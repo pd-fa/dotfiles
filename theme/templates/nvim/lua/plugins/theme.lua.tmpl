@@ -1,0 +1,51 @@
+-- Generated from theme/palette.toml by theme/sync-theme.py -- do not edit.
+--
+-- tokyonight.nvim does not read colours from disk, so the palette is injected
+-- through its on_colors hook instead of forking the colourscheme.
+
+return {
+  {
+    "folke/tokyonight.nvim",
+    opts = {
+      style = "night",
+      on_colors = function(c)
+        c.bg = "{{bg}}"
+        c.bg_dark = "{{bg_dark}}"
+        c.bg_float = "{{bg_dark}}"
+        c.bg_highlight = "{{bg_highlight}}"
+        c.bg_popup = "{{bg_dark}}"
+        c.bg_sidebar = "{{bg_dark}}"
+        c.bg_statusline = "{{bar}}"
+        c.bg_visual = "{{bg_selection}}"
+        c.bg_search = "{{accent_deep}}"
+
+        c.fg = "{{fg}}"
+        c.fg_dark = "{{fg_dim}}"
+        c.fg_float = "{{fg}}"
+        c.fg_sidebar = "{{fg_dim}}"
+        c.fg_gutter = "{{muted}}"
+        c.comment = "{{muted}}"
+
+        c.blue = "{{accent}}"
+        c.blue1 = "{{accent_bright}}"
+        c.blue5 = "{{accent_bright}}"
+        c.blue6 = "{{fg}}"
+        c.blue7 = "{{accent_deep}}"
+        c.border = "{{bg_selection}}"
+        c.border_highlight = "{{accent}}"
+
+        c.magenta = "{{purple}}"
+        c.magenta2 = "{{accent_bright}}"
+        c.purple = "{{purple_deep}}"
+        c.cyan = "{{info}}"
+        c.teal = "{{teal}}"
+        c.green = "{{ok}}"
+        c.yellow = "{{warn}}"
+        c.orange = "{{special}}"
+        c.red = "{{err}}"
+        c.red1 = "{{err_bright}}"
+      end,
+    },
+  },
+  { "LazyVim/LazyVim", opts = { colorscheme = "tokyonight" } },
+}

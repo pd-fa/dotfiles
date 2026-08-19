@@ -51,6 +51,16 @@ for s in "$CONFIG"/ai/skills/*/; do
 done
 skip "settings.json + $(find "$CONFIG/ai/skills" -maxdepth 1 -mindepth 1 -type d | wc -l | tr -d ' ') skills"
 
+# Rendered files are committed, so a fresh clone is already themed; this only
+# does work when palette.local.toml overrides the house palette. Non-fatal —
+# an unthemed shell is better than an abandoned bootstrap.
+step "Rendering themed configs"
+if python3 "$CONFIG/theme/sync-theme.py" >/dev/null 2>&1; then
+	skip "$(find "$CONFIG/theme/templates" "$CONFIG/theme/upstream" -type f | wc -l | tr -d ' ') configs from theme/palette.toml"
+else
+	warn "theme render failed - configs keep their committed colours"
+fi
+
 step "Configuring git hooks"
 # Set as a tilde path rather than "$CONFIG" so the value committed to git/config
 # stays portable — home directory names differ from one machine to the next.

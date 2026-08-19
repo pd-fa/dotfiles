@@ -1,0 +1,124 @@
+# Canonical colour source for every terminal application in this repo.
+#
+# Retheme by editing [slots] only. Keys are ROLES, never colour names — a slot
+# called "accent" survives a move from pink to violet; one called "pink" does
+# not, and the coupling reappears in every consumer.
+#
+# Semantic slots (ok/warn/err/info) stay legible on purpose. btop's temperature
+# gradient, lazygit's diffs and atuin's alerts encode meaning in hue; recolour
+# those to match the chrome and the signal is gone.
+
+schemaVersion = 1
+name = "pinknight"
+
+[slots]
+# Surfaces — plum-tinted, darkest first
+bg            = "#1c1420"
+bg_dark       = "#150e18"
+bg_highlight  = "#2a1c2b"
+bg_selection  = "#412a3d"
+bar           = "#4d1f3d"
+panel         = "#6b2a54"
+
+# Text
+fg            = "#ffd6ec"
+fg_dim        = "#c99ab4"
+muted         = "#8a6b7d"
+ink           = "#1a0f18"
+
+# Chrome accents — the pink identity
+accent        = "#ff4fa3"
+accent_bright = "#ff7ab8"
+accent_deep   = "#c93d80"
+purple        = "#bb9af7"
+purple_deep   = "#9d7cd8"
+
+# Semantic — hue carries meaning, retune with care
+ok            = "#9ece6a"
+warn          = "#e0af68"
+err           = "#f7768e"
+err_bright    = "#db4b4b"
+info          = "#7dcfff"
+info_deep     = "#27a1b9"
+info_light    = "#89ddff"
+teal          = "#73daca"
+special       = "#ff9e64"
+
+# Pairs asserted on every render. Rendering aborts below the floor, so a
+# retune can never silently ship unreadable chrome.
+[[contrast]]
+fg = "fg"
+bg = "bar"
+min = 4.5
+[[contrast]]
+fg = "fg_dim"
+bg = "bar"
+min = 4.5
+[[contrast]]
+fg = "ink"
+bg = "accent"
+min = 4.5
+[[contrast]]
+fg = "fg"
+bg = "panel"
+min = 4.5
+[[contrast]]
+fg = "fg"
+bg = "bg"
+min = 7.0
+[[contrast]]
+fg = "muted"
+bg = "bg"
+min = 3.0
+
+# Upstream Tokyo Night hex -> slot. Vendored theme files are rewritten through
+# this map, so adopting a new upstream theme means extending this table rather
+# than hand-editing eleven config files.
+[source]
+"#1a1b26" = "bg"
+"#16161e" = "bg_dark"
+"#24283b" = "bg_highlight"
+"#3b4261" = "bg_selection"
+"#283457" = "bg_selection"
+"#414868" = "bg_selection"
+"#363b54" = "bg_highlight"
+"#c0caf5" = "fg"
+"#c0cefc" = "fg"
+"#cfc9c2" = "fg"
+"#a9b1d6" = "fg_dim"
+"#9aa5ce" = "fg_dim"
+"#9abdf5" = "fg_dim"
+"#565f89" = "muted"
+"#545c7e" = "muted"
+"#4e5579" = "muted"
+"#444b6a" = "muted"
+"#747ca1" = "muted"
+"#7aa2f7" = "accent"
+"#6d91de" = "accent_deep"
+"#6183bb" = "accent_deep"
+"#ff007c" = "accent_bright"
+"#ba3c97" = "accent_deep"
+"#bb9af7" = "purple"
+"#9d7cd8" = "purple_deep"
+"#b267e6" = "purple_deep"
+"#9d599d" = "purple_deep"
+"#9ece6a" = "ok"
+"#e0af68" = "warn"
+"#ffdb69" = "warn"
+"#dbc08a" = "warn"
+"#ff9e64" = "special"
+"#ffa300" = "special"
+"#f7768e" = "err"
+"#db4b4b" = "err_bright"
+"#fc7b7b" = "err_bright"
+"#914c54" = "err_bright"
+"#7dcfff" = "info"
+"#89ddff" = "info_light"
+"#61bdf2" = "info_light"
+"#b4f9f8" = "info_light"
+"#2ac3de" = "info"
+"#0db9d7" = "info_deep"
+"#27a1b9" = "info_deep"
+"#449dab" = "info_deep"
+"#41a6b5" = "info_deep"
+"#73daca" = "teal"

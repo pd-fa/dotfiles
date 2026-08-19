@@ -137,22 +137,22 @@ if-shell "[ -z \"$TMUX_MINIMAL\" ]" {
 }
 
 # Personal pink theme (Tokyo Night derived)
-# Ramp:  bar #4d1f3d | panel #6b2a54 | accent #ff4fa3
-#        fg  #ffd6ec | dim   #c99ab4 | ink    #1a0f18
+# Ramp:  bar {{bar}} | panel {{panel}} | accent {{accent}}
+#        fg  {{fg}} | dim   {{fg_dim}} | ink    {{ink}}
 
-set -g mode-style "fg=#1a0f18,bg=#ff4fa3"
+set -g mode-style "fg={{ink}},bg={{accent}}"
 
-set -g message-style "fg=#ffd6ec,bg=#6b2a54"
-set -g message-command-style "fg=#ffd6ec,bg=#6b2a54"
+set -g message-style "fg={{fg}},bg={{panel}}"
+set -g message-command-style "fg={{fg}},bg={{panel}}"
 
-set -g pane-border-style "fg=#6b2a54"
-set -g pane-active-border-style "fg=#ff4fa3"
+set -g pane-border-style "fg={{panel}}"
+set -g pane-active-border-style "fg={{accent}}"
 
 set -g status "on"
 set -g status-position top
 set -g status-justify "left"
 
-set -g status-style "fg=#ffd6ec,bg=#4d1f3d"
+set -g status-style "fg={{fg}},bg={{bar}}"
 
 set -g status-left-length "100"
 set -g status-right-length "100"
@@ -160,20 +160,20 @@ set -g status-right-length "100"
 set -g status-left-style NONE
 set -g status-right-style NONE
 
-set -g status-left "#[fg=#1a0f18,bg=#ff4fa3,bold] #S #[default] "
-set -g status-right "#[fg=#ffd6ec,bg=#4d1f3d] #{prefix_highlight} #[fg=#ffd6ec,bg=#6b2a54] %Y-%m-%d  %I:%M %p #[fg=#1a0f18,bg=#ff4fa3,bold] #h "
+set -g status-left "#[fg={{ink}},bg={{accent}},bold] #S #[default] "
+set -g status-right "#[fg={{fg}},bg={{bar}}] #{prefix_highlight} #[fg={{fg}},bg={{panel}}] %Y-%m-%d  %I:%M %p #[fg={{ink}},bg={{accent}},bold] #h "
 if-shell '[ "$(tmux show-option -gqv "clock-mode-style")" == "24" ]' {
-  set -g status-right "#[fg=#ffd6ec,bg=#4d1f3d] #{prefix_highlight} #[fg=#ffd6ec,bg=#6b2a54] %Y-%m-%d  %H:%M #[fg=#1a0f18,bg=#ff4fa3,bold] #h "
+  set -g status-right "#[fg={{fg}},bg={{bar}}] #{prefix_highlight} #[fg={{fg}},bg={{panel}}] %Y-%m-%d  %H:%M #[fg={{ink}},bg={{accent}},bold] #h "
 }
 
-setw -g window-status-activity-style "underscore,fg=#ffd6ec,bg=#4d1f3d"
+setw -g window-status-activity-style "underscore,fg={{fg}},bg={{bar}}"
 setw -g window-status-separator ""
-setw -g window-status-style "NONE,fg=#c99ab4,bg=#4d1f3d"
+setw -g window-status-style "NONE,fg={{fg_dim}},bg={{bar}}"
 setw -g window-status-format " #I  #W #F "
-setw -g window-status-current-format "#[fg=#1a0f18,bg=#ff4fa3,bold] #I  #W #F "
+setw -g window-status-current-format "#[fg={{ink}},bg={{accent}},bold] #I  #W #F "
 
 # tmux-plugins/tmux-prefix-highlight support
-set -g @prefix_highlight_output_prefix "#[fg=#1a0f18]#[bg=#e0af68]"
+set -g @prefix_highlight_output_prefix "#[fg={{ink}}]#[bg={{warn}}]"
 set -g @prefix_highlight_output_suffix ""
 
 ######################

@@ -12,6 +12,7 @@ github-copilot/
 # .example files by bootstrap.sh.
 git/config.local
 bootstrap.local
+theme/palette.local.toml
 gh/hosts.yml
 
 # Machine-local tool state
