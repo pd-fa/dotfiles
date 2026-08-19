@@ -173,6 +173,11 @@ gcloud container clusters get-credentials the-fa-sandbox-helix-obs-infra-cluster
 
 ## Conventions
 
+- **Work on `main`.** The working tree *is* the live config directory, so `git switch`
+  does not merely change what you are editing — it creates and deletes files that
+  running programs are reading. Checking out a branch that predates `karabiner/`
+  deletes `karabiner.json` out from under a running Karabiner-Elements. Feature
+  branches are a trap in this repo; commit to `main`.
 - **Runtimes and CLI tooling** via `mise`, not nvm/asdf/rustup or a manual Go install.
   `mise/config.toml` declares node, python, go and rust alongside the CLI tools;
   `mise install` provisions the lot. Per-project overrides via `.mise.toml`.
