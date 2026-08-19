@@ -90,7 +90,7 @@ interactive.
 Apps not in the Brewfile:
 
 ```bash
-brew install --cask podman-desktop dia obsidian raycast
+brew install --cask podman-desktop obsidian raycast
 gcloud components install gke-gcloud-auth-plugin
 ```
 
