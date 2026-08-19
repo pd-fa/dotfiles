@@ -75,7 +75,8 @@ one go, which is the normal way to pick up a change to this repo. It installs th
 **Nerd Font** — without which every glyph renders as tofu), links shell and agent config
 into `$HOME`, wires the git hooks, applies the macOS defaults the input stack depends on,
 symlinks the Firefox profile config and installs its add-on policies, installs runtimes via
-mise, builds the bat theme cache, brings up the podman machine, renders the MCP configs, and
+mise, builds the bat theme cache, brings up the podman machine, wires the docker compose
+plugin, renders the MCP configs, and
 restores atuin history from 1Password if it isn't already there.
 
 Phase 1 is deliberately not scripted — MDM, the 1Password GUI and Xcode CLT are all

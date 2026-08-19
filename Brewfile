@@ -22,8 +22,9 @@ brew "direnv"
 # silently failed. A real binary on PATH resolves for every caller.
 brew "docker"
 # Compose v2 as a docker plugin. `docker compose` only finds it once
-# ~/.docker/config.json lists /opt/homebrew/lib/docker/cli-plugins in
-# cliPluginsExtraDirs — that file holds registry auth, so it is not tracked here.
+# ~/.docker/config.json names the plugin dir in cliPluginsExtraDirs, which the
+# bootstrap merges in place — the same file gains registry auth on
+# `docker login`, so it cannot be tracked here outright.
 brew "docker-compose"
 # Modern, maintained replacement for ls
 brew "eza"
@@ -43,8 +44,6 @@ brew "mise"
 brew "neovim"
 # Tool for managing OCI containers and pods
 brew "podman"
-# Alternative to docker-compose using podman
-brew "podman-compose"
 # PDF rendering library (based on the xpdf-3.0 code base)
 brew "poppler"
 # Terminal multiplexer
