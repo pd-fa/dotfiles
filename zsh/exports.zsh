@@ -1,4 +1,4 @@
-export FZF_DEPTH=3
+export FZF_DEPTH=1
 # Derived from TMPDIR — the per-machine /var/folders ID differs on every host.
 # podman names the socket after the machine, so "podman-machine-default" here is
 # the machine name and not a generic suffix: rename the machine and this points
