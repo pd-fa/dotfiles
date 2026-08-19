@@ -107,11 +107,8 @@ exec zsh -l
 - `tmux` — tpm self-bootstraps and installs plugins on first run
 - `zsh/fzf-tab/` is an upstream clone, gitignored, cloned by `.zshrc` on first run
 - **Firefox** — launch once so the profile exists, then **re-run the bootstrap** to
-  symlink `user.js` and `chrome/` into it. Sidebery and Tridactyl install themselves
-  on that first launch via `firefox/policies.json`.
-- **Tridactyl** — `:installnative`, then `:source`. Until the native messenger is
-  installed Tridactyl cannot read from disk, so `tridactylrc` is ignored and
-  `colourscheme pinknight` fails. This is the usual reason it looks like nothing happened.
+  symlink `user.js` and `chrome/` into it. Sidebery installs itself on that
+  first launch via `firefox/policies.json`.
 - **Sidebery** — import `firefox/sidebery-settings.json` (settings > Help > Import), and
   paste `firefox/sidebery/pinknight.css` into settings > Styles editor > Sidebar.
 
@@ -165,7 +162,6 @@ gcloud container clusters get-credentials the-fa-sandbox-helix-obs-infra-cluster
 | `bat/`, `btop/`, `yazi/`, `k9s/`, `lazygit/` | Tool configs + themes |
 | `theme/` | Canonical palette + renderer for every themed config |
 | `firefox/` | Prefs, policies and chrome CSS — symlinked into the profile by the bootstrap |
-| `tridactyl/` | Keyboard driving for Firefox — read from `~/.config` natively, no symlink |
 | `aerospace/` | Tiling WM — read from `~/.config` natively, no symlink |
 | `hammerspoon/` | Scroll direction + mouse buttons — `init.lua` symlinked into `~/.hammerspoon` |
 | `macos/` | System `defaults` the input config depends on |
@@ -277,9 +273,7 @@ symlinks that into the profile it discovers. The renderer stays unaware of it.
 - Rendered files are committed, so a fresh clone is themed before bootstrap runs.
   **Edit the template or the palette, never the rendered file.**
 
-`bat` caches its themes — run `bat cache --build` after a palette change. Tridactyl
-copies a theme into extension storage when it loads, so a palette change needs
-`:source` in Firefox before the command line repaints.
+`bat` caches its themes — run `bat cache --build` after a palette change.
 
 ## Not managed here
 

@@ -93,7 +93,7 @@ else
 fi
 
 step "Applying macOS defaults"
-# Narrow by design: only the system settings the Karabiner/AeroSpace input
+# Narrow by design: only the system settings the Hammerspoon/AeroSpace input
 # config depends on. Not a general defaults sweep. Cheap and always available,
 # so it runs before anything that reaches the network.
 "$CONFIG/macos/defaults.sh"
@@ -142,26 +142,27 @@ else
 fi
 
 step "Installing Firefox policies"
-# Auto-installs Sidebery and Tridactyl on first launch. This lives inside the
+# Auto-installs Sidebery on first launch. This lives inside the
 # app bundle, which is the only path Firefox reads on macOS — so a cask upgrade
 # replaces the bundle and drops it. Re-running restores it; the telemetry prefs
-# in user.js are what hold the line in between.
+# in user.js are what hold the line in between. Writing there is TCC-gated:
+# macOS will not let one app modify another's signed bundle without the grant.
 ff_dist="/Applications/Firefox.app/Contents/Resources/distribution"
 if [ ! -d /Applications/Firefox.app ]; then
 	skip "Firefox not installed — skipping policies"
 elif mkdir -p "$ff_dist" && cp "$CONFIG/firefox/policies.json" "$ff_dist/policies.json"; then
-	skip "Sidebery + Tridactyl auto-install, telemetry off"
+	skip "Sidebery auto-install, telemetry off"
 else
-	warn "could not write policies.json into Firefox.app — add-ons need installing by hand"
+	warn "could not write policies.json into Firefox.app — grant your terminal App Management in System Settings > Privacy & Security > App Management"
 fi
 
 step "Bringing up the macOS input stack"
-# Karabiner and AeroSpace are installed by the Brewfile above; this starts them
-# and reports the grants a script is not allowed to make. Accessibility, Input
-# Monitoring and system extension approval are gated by TCC, which exists
-# precisely so that no privileged process can grant them on the user's behalf —
-# only a Jamf PPPC profile could, and that is not ours to push. So: detect and
-# instruct. Non-fatal throughout; a missing grant must not abandon the run.
+# Hammerspoon and AeroSpace are installed by the Brewfile above; this starts
+# them and reports the grants a script is not allowed to make. Accessibility
+# and Input Monitoring are gated by TCC, which exists precisely so that no
+# privileged process can grant them on the user's behalf — only a Jamf PPPC
+# profile could, and that is not ours to push. So: detect and instruct.
+# Non-fatal throughout; a missing grant must not abandon the run.
 if [ -d "/Applications/AeroSpace.app" ]; then
 	pgrep -x AeroSpace >/dev/null 2>&1 || open -a AeroSpace
 	if aerospace list-workspaces --focused >/dev/null 2>&1; then
@@ -285,11 +286,11 @@ else
 	# cmd/go — see the GOBIN note in the README — so without the guard errexit
 	# would abort the run here, skipping every step below.
 	stale=$(brew bundle cleanup --file="$CONFIG/Brewfile" 2>/dev/null |
-		awk '/^Would uninstall formulae:/{f=1;next} /^Would |^Run /{f=0} f&&NF{c++} END{print c+0}' || true)
+		awk '/^Would uninstall (formulae|casks):/{f=1;next} /^Would |^Run /{f=0} f&&NF{c++} END{print c+0}' || true)
 	if [ "$stale" -eq 0 ]; then
 		skip "brew matches the Brewfile"
 	else
-		warn "$stale brew formulae are not in the Brewfile — review 'brew bundle cleanup --file=$CONFIG/Brewfile', then re-run it with --force"
+		warn "$stale brew packages are not in the Brewfile — review 'brew bundle cleanup --file=$CONFIG/Brewfile', then re-run it with --force"
 	fi
 fi
 
