@@ -26,6 +26,10 @@ gaps.outer.right = 6
 alt-slash = 'layout tiles horizontal vertical'
 alt-comma = 'layout accordion horizontal vertical'
 
+# --no-outer-gaps because the 6px border is chrome for tiled windows; keeping
+# it around a window explicitly asked to fill the screen defeats the request.
+alt-f = 'fullscreen --no-outer-gaps'
+
 alt-h = 'focus left'
 alt-j = 'focus down'
 alt-k = 'focus up'

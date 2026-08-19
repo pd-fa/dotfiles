@@ -278,6 +278,7 @@ System-wide. `alt` is Option. Config: `aerospace/aerospace.toml`.
 - `alt+-` / `alt+=` - Shrink / grow window
 - `alt+/` - Tiles layout (toggle horizontal/vertical)
 - `alt+,` - Accordion layout
+- `alt+f` - Fullscreen toggle (edge to edge, ignores gaps)
 
 ### Workspaces (1-5)
 - `alt+1..5` - Focus workspace
