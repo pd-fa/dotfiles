@@ -287,7 +287,7 @@ System-wide. `alt` is Option. Config: `aerospace/aerospace.toml`.
 - `alt+[` / `alt+]` - Previous / next workspace (wraps)
 - `alt+tab` - Back and forth
 
-### Mouse (Logitech G502, via Karabiner)
+### Mouse (via Hammerspoon)
 - `mouse4` - Previous workspace
 - `mouse5` - Next workspace
 - Scroll wheel is inverted on this mouse only; the trackpad stays natural

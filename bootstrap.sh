@@ -61,6 +61,14 @@ else
 	warn "theme render failed - configs keep their committed colours"
 fi
 
+step "Linking Hammerspoon config"
+# Hammerspoon reads ~/.hammerspoon, not XDG, so this is the one input config
+# that needs a link. The directory stays real — Spoons and its own state live
+# there and do not belong in this repo.
+mkdir -p "$HOME/.hammerspoon"
+ln -sfn "$CONFIG/hammerspoon/init.lua" "$HOME/.hammerspoon/init.lua"
+skip "init.lua -> hammerspoon/init.lua"
+
 step "Configuring git hooks"
 # Set as a tilde path rather than "$CONFIG" so the value committed to git/config
 # stays portable — home directory names differ from one machine to the next.
@@ -165,24 +173,17 @@ else
 	warn "AeroSpace not installed — brew bundle incomplete"
 fi
 
-if [ -d "/Applications/Karabiner-Elements.app" ]; then
-	# Launching the app is what registers the extension with the system; until it
-	# runs once, systemextensionsctl knows nothing about it.
-	pgrep -x Karabiner-Elements >/dev/null 2>&1 || open -a Karabiner-Elements
-	# The DriverKit extension, not the app, is what actually grabs HID events.
-	pqrs=$(systemextensionsctl list 2>/dev/null | grep "org.pqrs" || true)
-	case "$pqrs" in
-	*"activated enabled"*)
-		skip "Karabiner DriverKit extension active" ;;
-	*"waiting for user"*)
-		warn "Karabiner extension awaiting approval — System Settings > General > Login Items & Extensions > Driver Extensions" ;;
-	*)
-		warn "Karabiner extension not registered — open Karabiner-Elements once, then approve it" ;;
-	esac
+if [ -d "/Applications/Hammerspoon.app" ]; then
+	pgrep -x Hammerspoon >/dev/null 2>&1 || open -a Hammerspoon
+	# A running process is not a working one: without Accessibility the event taps
+	# start and then silently never fire. hs.ipc in init.lua exposes this check.
+	if [ "$(hs -c "hs.accessibilityState()" 2>/dev/null)" = "true" ]; then
+		skip "Hammerspoon running with Accessibility"
+	else
+		warn "Hammerspoon needs Accessibility — System Settings > Privacy & Security > Accessibility"
+	fi
 else
-	# Its .pkg needs a real TTY for the sudo prompt, so this fails under any
-	# non-interactive runner even though it succeeds in a normal terminal.
-	warn "Karabiner-Elements not installed — run 'brew install --cask karabiner-elements' from a terminal"
+	warn "Hammerspoon not installed — brew bundle incomplete"
 fi
 
 step "Starting the podman machine"
@@ -204,6 +205,30 @@ elif podman machine start; then
 	skip "podman-machine-default started"
 else
 	warn "podman machine start failed — check krunkit installed: brew list krunkit"
+fi
+
+step "Wiring the docker compose plugin"
+# `docker compose` finds Homebrew's plugin only when config.json names its
+# directory. Without it the hyphenated docker-compose still works and the space
+# form does not, which reads as a broken install rather than a missing setting.
+# Merged in place, not written: the same file gains registry auth on
+# `docker login`, which is why it cannot simply be tracked in this repo.
+if ! command -v docker >/dev/null; then
+	warn "docker not installed (brew bundle incomplete) — skipping compose plugin"
+elif python3 -c '
+import json, pathlib, sys
+p = pathlib.Path.home() / ".docker" / "config.json"
+cfg = json.loads(p.read_text()) if p.exists() else {}
+dirs = cfg.setdefault("cliPluginsExtraDirs", [])
+if sys.argv[1] in dirs:
+    raise SystemExit(0)
+dirs.append(sys.argv[1])
+p.parent.mkdir(parents=True, exist_ok=True)
+p.write_text(json.dumps(cfg, indent=2) + "\n")
+' "$(brew --prefix)/lib/docker/cli-plugins"; then
+	skip "cliPluginsExtraDirs -> $(brew --prefix)/lib/docker/cli-plugins"
+else
+	warn "could not merge ~/.docker/config.json — 'docker compose' will not find the plugin"
 fi
 
 step "Ensuring rustup is present"

@@ -120,15 +120,10 @@ exec zsh -l
 > to link into, which is why the browser needs the bootstrap run twice on a rebuild.
 
 See `docs/BROWSER.md` for why Firefox replaced Arc.
-- **Karabiner-Elements** — approve the DriverKit extension in System Settings → General →
-  Login Items & Extensions → Driver Extensions, then grant Input Monitoring and
-  Accessibility. Every rule silently no-ops until both are granted.
+- **Hammerspoon** — grant Accessibility. The event taps start regardless and then
+  silently never fire without it, so a running Hammerspoon is not a working one.
 - **AeroSpace** — grant Accessibility. It tiles every open window the moment it launches.
 - **Log out and back in** once, for `spans-displays` (see `macos/defaults.sh`).
-
-> **Gotcha:** the `karabiner-elements` cask ships a `.pkg`, so it is the one Brewfile
-> entry that prompts for a sudo password — an otherwise unattended `bootstrap.sh`
-> re-run will block there.
 
 See `docs/MACOS_INPUT.md` for why these replaced Mos and BetterTouchTool, and
 `KEYBINDINGS.md` for every binding in one place — AeroSpace's are the ones you will not
@@ -170,7 +165,8 @@ gcloud container clusters get-credentials the-fa-sandbox-helix-obs-infra-cluster
 | `theme/` | Canonical palette + renderer for every themed config |
 | `firefox/` | Prefs, policies and chrome CSS — symlinked into the profile by the bootstrap |
 | `tridactyl/` | Keyboard driving for Firefox — read from `~/.config` natively, no symlink |
-| `karabiner/`, `aerospace/` | Mouse rules + tiling WM — read from `~/.config` natively, no symlink |
+| `aerospace/` | Tiling WM — read from `~/.config` natively, no symlink |
+| `hammerspoon/` | Scroll direction + mouse buttons — `init.lua` symlinked into `~/.hammerspoon` |
 | `macos/` | System `defaults` the input config depends on |
 | `docs/` | Decision records — why the browser and input stack are what they are |
 | `KEYBINDINGS.md` | Cheatsheet for every tool's bindings — nvim, tmux, AeroSpace, shell |
