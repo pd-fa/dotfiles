@@ -84,6 +84,12 @@ else
 	skip "identity: $email"
 fi
 
+step "Applying macOS defaults"
+# Narrow by design: only the system settings the Karabiner/AeroSpace input
+# config depends on. Not a general defaults sweep. Cheap and always available,
+# so it runs before anything that reaches the network.
+"$CONFIG/macos/defaults.sh"
+
 step "Checking ~/Library/LaunchAgents is writable"
 # Some MDM-pushed installers (the Xerox print client, for one) create this
 # directory as root, which makes every `brew services` start fail with an
@@ -139,6 +145,44 @@ elif mkdir -p "$ff_dist" && cp "$CONFIG/firefox/policies.json" "$ff_dist/policie
 	skip "Sidebery + Tridactyl auto-install, telemetry off"
 else
 	warn "could not write policies.json into Firefox.app — add-ons need installing by hand"
+fi
+
+step "Bringing up the macOS input stack"
+# Karabiner and AeroSpace are installed by the Brewfile above; this starts them
+# and reports the grants a script is not allowed to make. Accessibility, Input
+# Monitoring and system extension approval are gated by TCC, which exists
+# precisely so that no privileged process can grant them on the user's behalf —
+# only a Jamf PPPC profile could, and that is not ours to push. So: detect and
+# instruct. Non-fatal throughout; a missing grant must not abandon the run.
+if [ -d "/Applications/AeroSpace.app" ]; then
+	pgrep -x AeroSpace >/dev/null 2>&1 || open -a AeroSpace
+	if aerospace list-workspaces --focused >/dev/null 2>&1; then
+		skip "AeroSpace running and responding"
+	else
+		warn "AeroSpace not responding — grant Accessibility in System Settings > Privacy & Security > Accessibility"
+	fi
+else
+	warn "AeroSpace not installed — brew bundle incomplete"
+fi
+
+if [ -d "/Applications/Karabiner-Elements.app" ]; then
+	# Launching the app is what registers the extension with the system; until it
+	# runs once, systemextensionsctl knows nothing about it.
+	pgrep -x Karabiner-Elements >/dev/null 2>&1 || open -a Karabiner-Elements
+	# The DriverKit extension, not the app, is what actually grabs HID events.
+	pqrs=$(systemextensionsctl list 2>/dev/null | grep "org.pqrs" || true)
+	case "$pqrs" in
+	*"activated enabled"*)
+		skip "Karabiner DriverKit extension active" ;;
+	*"waiting for user"*)
+		warn "Karabiner extension awaiting approval — System Settings > General > Login Items & Extensions > Driver Extensions" ;;
+	*)
+		warn "Karabiner extension not registered — open Karabiner-Elements once, then approve it" ;;
+	esac
+else
+	# Its .pkg needs a real TTY for the sudo prompt, so this fails under any
+	# non-interactive runner even though it succeeds in a normal terminal.
+	warn "Karabiner-Elements not installed — run 'brew install --cask karabiner-elements' from a terminal"
 fi
 
 step "Starting the podman machine"
