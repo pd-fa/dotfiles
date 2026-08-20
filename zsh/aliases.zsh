@@ -58,3 +58,10 @@ alias cc='claude --continue'
 ## `nx run <project>:<target>` errors loudly on a bad name and suggests the real
 ## one; `nx run-many -t <typo>` prints "No tasks were run" and exits 0.
 alias nxr='nx run'
+# AeroSpace — focus-or-launch the apps in the daily loop. All resolve through
+# `wo`, so they raise an existing window rather than starting a second copy.
+alias wg='wo Ghostty'
+alias wb='wo Firefox'
+alias wt='wo "Microsoft Teams"'
+alias wd='wo TablePlus'
+alias wn='wo Obsidian'
