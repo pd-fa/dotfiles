@@ -167,6 +167,20 @@ Quick reference for all terminal tools and their keybindings.
 - `v` / `vi` / `vim` / `nv` - nvim
 - `dot` - cd to ~/.config and open nvim
 
+### Windows (AeroSpace)
+Everything below crosses workspaces and displays, which the keybindings cannot —
+they only ever act on the focused window. Each takes an optional query and falls
+back to an fzf picker without one.
+
+- `wf [query]` - Focus any window anywhere
+- `wo <app>` - Focus the app, or launch it if it is not running
+- `wg` / `wb` / `wt` / `wd` / `wn` - Ghostty / Firefox / Teams / TablePlus / Obsidian
+- `wsum [query]` - Summon a window to the current workspace
+- `wsend [ws]` - Send the focused window to a workspace
+- `wmon [display]` - Move this workspace to another display
+- `wpull [ws]` - Pull a workspace onto this display
+- `ww` - Table of every window, its workspace and its display
+
 ### System
 - `mon` - Launch btop (system monitor)
 - `kp <port>` - Kill process on port
@@ -272,12 +286,24 @@ Quick reference for all terminal tools and their keybindings.
 
 System-wide. `alt` is Option. Config: `aerospace/aerospace.toml`.
 
+There is no i3-style "split" here. A workspace is a tree of real windows and
+never holds an empty pane, so there is nothing to split *into* — you shape the
+layout after the windows exist. `alt+/` flips the orientation of the container
+the focused window sits in, and `alt+ctrl+hjkl` wraps it together with a
+neighbour to make a new nested container.
+
+### Launch
+- `alt+enter` - New Ghostty window
+
 ### Focus / Move
 - `alt+h/j/k/l` - Focus window left/down/up/right
 - `alt+shift+h/j/k/l` - Move window left/down/up/right
+- `alt+ctrl+h/j/k/l` - Nest window with the neighbour in that direction
 - `alt+-` / `alt+=` - Shrink / grow window
 - `alt+/` - Tiles layout (toggle horizontal/vertical)
 - `alt+,` - Accordion layout
+- `alt+shift+/` - Flatten the tree (undo every nesting on this workspace)
+- `alt+shift+=` - Balance all window sizes
 - `alt+f` - Fullscreen toggle (edge to edge, ignores gaps)
 - `alt+shift+space` - Float / re-tile the focused window
 
@@ -286,6 +312,14 @@ System-wide. `alt` is Option. Config: `aerospace/aerospace.toml`.
 - `cmd+alt+shift+1..5` - Move window to workspace
 - `alt+[` / `alt+]` - Previous / next workspace (wraps)
 - `alt+tab` - Back and forth
+
+### Displays
+Brackets mean "traverse" throughout: `alt` walks workspaces, `cmd+alt` walks
+displays, and `shift` takes the focused window along.
+
+- `cmd+alt+[` / `cmd+alt+]` - Focus previous / next display
+- `cmd+alt+shift+[` / `cmd+alt+shift+]` - Move window to previous / next display
+- `alt+ctrl+[` / `alt+ctrl+]` - Move the whole workspace to another display
 
 ### Mouse (via Hammerspoon)
 - `mouse4` - Previous workspace
@@ -366,4 +400,4 @@ prefix + F (tmux) or fp (shell) → select project
 
 ---
 
-Last updated: 2025-12-18
+Last updated: 2026-08-20
