@@ -23,8 +23,38 @@ gaps.outer.right = 6
 
 [mode.main.binding]
 
+# AeroSpace arranges windows; it never opens them. Without this there is no
+# i3-style "give me a terminal in this tile" and every new window has to come
+# from Spotlight.
+#
+# Not `open -na Ghostty`: -n starts a second Ghostty *instance* rather than a
+# second window, and the extra process outlives the window it was opened for.
+# Ghostty's own `+new-window` answers "not supported on this platform" on macOS.
+#
+# Clicking the menu item rather than sending cmd-n, because a global keystroke
+# races `activate` — it lands on whatever is frontmost at the moment it fires,
+# which is not Ghostty whenever this binding is most useful. Addressing the
+# process explicitly removes the race.
+alt-enter = '''exec-and-forget osascript -e 'tell application "Ghostty" to activate' -e 'tell application "System Events" to tell process "Ghostty" to click menu item "New Window" of menu "File" of menu bar 1' '''
+
 alt-slash = 'layout tiles horizontal vertical'
 alt-comma = 'layout accordion horizontal vertical'
+
+# AeroSpace has no i3-style split: the tree holds windows, never empty panes, so
+# there is nothing to split *into*. Nesting is made after the fact by wrapping
+# two existing siblings under a new container, which is what join-with does.
+# alt-ctrl continues the hjkl rows above — alt focuses, alt-shift moves,
+# alt-ctrl nests.
+alt-ctrl-h = 'join-with left'
+alt-ctrl-j = 'join-with down'
+alt-ctrl-k = 'join-with up'
+alt-ctrl-l = 'join-with right'
+
+# The way back out. join-with nests without limit and a deep tree is very hard
+# to read from the geometry alone, so flatten is the only non-destructive reset
+# short of closing windows.
+alt-shift-slash = 'flatten-workspace-tree'
+alt-shift-equal = 'balance-sizes'
 
 # --no-outer-gaps because the 6px border is chrome for tiled windows; keeping
 # it around a window explicitly asked to fill the screen defeats the request.
@@ -66,4 +96,21 @@ cmd-alt-shift-5 = 'move-node-to-workspace 5'
 # the same two commands.
 alt-leftSquareBracket = 'workspace --wrap-around prev'
 alt-rightSquareBracket = 'workspace --wrap-around next'
+
+# Monitors. The bracket family already means "traverse" one axis at a time, so
+# it extends upwards rather than inventing a new shape: alt walks workspaces,
+# cmd-alt walks monitors, and shift takes the focused window along — the same
+# shift rule the workspace bindings above already use.
+cmd-alt-leftSquareBracket = 'focus-monitor --wrap-around prev'
+cmd-alt-rightSquareBracket = 'focus-monitor --wrap-around next'
+
+cmd-alt-shift-leftSquareBracket = 'move-node-to-monitor --wrap-around --focus-follows-window prev'
+cmd-alt-shift-rightSquareBracket = 'move-node-to-monitor --wrap-around --focus-follows-window next'
+
+# Moves the whole workspace rather than one window. This is the one that matters
+# when a display is unplugged, or when a context built on the laptop screen
+# should move to the 4K wholesale.
+alt-ctrl-leftSquareBracket = 'move-workspace-to-monitor --wrap-around prev'
+alt-ctrl-rightSquareBracket = 'move-workspace-to-monitor --wrap-around next'
+
 alt-tab = 'workspace-back-and-forth'
