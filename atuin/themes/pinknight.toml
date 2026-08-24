@@ -1,0 +1,12 @@
+[theme]
+name = "pinknight"
+
+[colors]
+AlertInfo = "#8ce6ff"    # Info
+AlertWarn = "#e8bd76"    # Warn
+AlertError = "#ef5f5f" # Error
+Annotation = "#e9e2f8"     # Foreground
+Base = "#141021"           # Background
+Guidance = "#ffab77"  # Guidance
+Important = "#c9aefc"  # Purple
+Title = "#ff4fa3"      # Accent

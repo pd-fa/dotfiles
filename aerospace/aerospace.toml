@@ -11,8 +11,8 @@ auto-reload-config = true
 # 'workspace next|prev' walks every workspace on the monitor in alphabetical
 # order, including empty ones. The mouse thumb buttons drive exactly that, so
 # the upstream default of 31 persistent workspaces (1-9, A-Z) would mean 31
-# clicks to wrap. Five is the whole point of keeping this list short.
-persistent-workspaces = ["1", "2", "3", "4", "5"]
+# clicks to wrap. A short list is the whole point.
+persistent-workspaces = ["1", "2", "3", "4", "5", "6"]
 
 gaps.inner.horizontal = 6
 gaps.inner.vertical = 6
@@ -85,12 +85,14 @@ cmd-alt-2 = 'workspace 2'
 cmd-alt-3 = 'workspace 3'
 cmd-alt-4 = 'workspace 4'
 cmd-alt-5 = 'workspace 5'
+cmd-alt-6 = 'workspace 6'
 
 cmd-alt-shift-1 = 'move-node-to-workspace 1'
 cmd-alt-shift-2 = 'move-node-to-workspace 2'
 cmd-alt-shift-3 = 'move-node-to-workspace 3'
 cmd-alt-shift-4 = 'move-node-to-workspace 4'
 cmd-alt-shift-5 = 'move-node-to-workspace 5'
+cmd-alt-shift-6 = 'move-node-to-workspace 6'
 
 # Keyboard equivalents of the mouse thumb buttons, which Hammerspoon maps to
 # the same two commands.

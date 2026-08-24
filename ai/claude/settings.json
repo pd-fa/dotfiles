@@ -15,7 +15,11 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus",
+  "statusLine": {
+    "type": "command",
+    "command": "~/.config/ai/claude/statusline.sh",
+    "padding": 0
+  },
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true,
     "context7@claude-plugins-official": false,
@@ -42,12 +46,7 @@
     "terraform@claude-plugins-official": false
   },
   "effortLevel": "xhigh",
-  "theme": "dark-ansi",
   "tui": "fullscreen",
-  "skipAutoPermissionPrompt": true,
-  "statusLine": {
-    "type": "command",
-    "command": "~/.config/ai/claude/statusline.sh",
-    "padding": 0
-  }
+  "theme": "dark-ansi",
+  "skipAutoPermissionPrompt": true
 }
