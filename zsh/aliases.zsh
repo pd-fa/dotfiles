@@ -65,3 +65,6 @@ alias wb='wo Firefox'
 alias wt='wo "Microsoft Teams"'
 alias wd='wo TablePlus'
 alias wn='wo Obsidian'
+# Helix — one command for DB + API + UI, each in its own tmux window
+alias helix-up='~/.config/tmux/scripts/helix-dev-up'
+alias helix-down='tmux kill-session -t helix-dev 2>/dev/null'
