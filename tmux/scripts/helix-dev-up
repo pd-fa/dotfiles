@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# One-shot local Helix stack: Postgres, seed data, then the API and UI dev
+# servers each in their own tmux window (long-running foreground processes
+# whose logs are worth watching independently, not backgrounded or merged
+# into one stream), then a browser tab for each once it's actually answering.
+set -euo pipefail
+
+HELIX_DIR="$HOME/dev/helix"
+SESSION="helix-dev"
+API_URL="http://localhost:8000/graphql"
+
+cd "$HELIX_DIR"
+
+# Mirrors vite.config.ts's own `base = serviceName ? "/${serviceName}/" : "/"`
+# rather than hardcoding /helix/, so this stays correct if that ever changes.
+UI_SERVICE_NAME=$(grep -m1 '^VITE_SERVICE_NAME=' apps/web/.env 2>/dev/null | cut -d= -f2-)
+UI_URL="https://localhost:3000/${UI_SERVICE_NAME:+$UI_SERVICE_NAME/}"
+
+if tmux has-session -t "$SESSION" 2>/dev/null; then
+  echo "Session '$SESSION' already running -- attaching."
+  exec tmux attach -t "$SESSION"
+fi
+
+echo "Starting Postgres..."
+pnpm local:db
+
+echo "Seeding fake data..."
+pnpm exec nx run core:db-seed
+
+echo "Starting API and UI in tmux session '$SESSION'..."
+tmux new-session -d -s "$SESSION" -n api -c "$HELIX_DIR" "pnpm core:dev"
+tmux new-window -t "$SESSION" -n ui -c "$HELIX_DIR" "pnpm dev:noauth"
+tmux select-window -t "$SESSION:api"
+
+# Polled rather than a fixed sleep -- Vite's cold start alone can take
+# 15-20s, and a fixed wait long enough for that is a needless delay warm.
+wait_for() {
+  local url=$1 tries=45
+  while ((tries--)); do
+    curl -ks -o /dev/null "$url" && return 0
+    sleep 1
+  done
+  return 1
+}
+
+echo "Waiting for the API and UI to be ready, then opening browser tabs..."
+wait_for "$API_URL" && open "$API_URL" || echo "API didn't respond in time -- open $API_URL manually" >&2
+wait_for "$UI_URL" && open "$UI_URL" || echo "UI didn't respond in time -- open $UI_URL manually" >&2
+
+exec tmux attach -t "$SESSION"
